@@ -1,0 +1,27 @@
+{
+  "name": "tcc-ec-blockchain-drug-supplychain-application",
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js --trace-warnings",
+    "dev": "nodemon --watch src src/index.js -- --trace-warnings"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Lukas A. Santaigo",
+    "email": "lukas.asant@gmail.com"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22",
+    "swagger-ui-express": "^4.6.3"
+  },
+  "devDependencies": {
+    "swagger-autogen": "^2.23.1"
+  }
+}
