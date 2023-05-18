@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.59.6",
     "@typescript-eslint/parser": "^5.59.6",
     "eslint": "^8.40.0",
@@ -23,6 +24,7 @@
   "dependencies": {
     "fabric-contract-api": "^2.5.2",
     "json-stringify-deterministic": "^1.0.8",
-    "sort-keys-recursive": "^2.1.8"
+    "sort-keys-recursive": "^2.1.8",
+    "uuid": "^9.0.0"
   }
 }

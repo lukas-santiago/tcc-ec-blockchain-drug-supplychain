@@ -1,0 +1,6 @@
+export * from './assets.interface'
+export * from './atividade.interface'
+export * from './consumidor.interface'
+export * from './local.interface'
+export * from './pessoa.interface'
+export * from './utils.interface'
