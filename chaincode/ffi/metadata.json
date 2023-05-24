@@ -1,0 +1,111 @@
+{
+  "$schema": "https://hyperledger.github.io/fabric-chaincode-node/main/api/contract-schema.json",
+  "contracts": {
+    "TestTypeContract": {
+      "name": "TestTypeContract",
+      "contractInstance": {
+        "name": "TestTypeContract",
+        "default": true
+      },
+      "transactions": [
+        {
+          "tag": [
+            "EVALUATE"
+          ],
+          "parameters": [
+            {
+              "name": "uuid",
+              "description": "",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "name": "exists"
+        },
+        {
+          "tag": [
+            "EVALUATE"
+          ],
+          "parameters": [
+            {
+              "name": "uuid",
+              "description": "",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "name": "get"
+        },
+        {
+          "tag": [
+            "EVALUATE"
+          ],
+          "parameters": [],
+          "name": "getAll"
+        },
+        {
+          "tag": [
+            "SUBMIT",
+            "submitTx"
+          ],
+          "parameters": [
+            {
+              "name": "json",
+              "description": "",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "name": "create"
+        },
+        {
+          "tag": [
+            "SUBMIT",
+            "submitTx"
+          ],
+          "parameters": [
+            {
+              "name": "uuid",
+              "description": "",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "name": "delete"
+        }
+      ],
+      "info": {
+        "title": "TestTypeContract",
+        "description": "",
+        "name": "TestTypeContract",
+        "version": ""
+      }
+    },
+    "org.hyperledger.fabric": {
+      "name": "org.hyperledger.fabric",
+      "contractInstance": {
+        "name": "org.hyperledger.fabric"
+      },
+      "transactions": [
+        {
+          "name": "GetMetadata"
+        }
+      ],
+      "info": {
+        "title": "",
+        "version": ""
+      }
+    }
+  },
+  "info": {
+    "version": "0.0.2",
+    "title": "tcc-ec-blockchain-drug-supplychain-chaincode"
+  },
+  "components": {
+    "schemas": {}
+  }
+}

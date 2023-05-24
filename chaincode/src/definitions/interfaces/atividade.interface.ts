@@ -12,7 +12,7 @@ export interface IAtividade {
 }
 
 export interface ITransporteAtividade extends IAtividade {
-  transportadora: IPessoaJuridica
+  transportadora: keyof IPessoaJuridica
   tipoTransporte: TIPO_TRANSPORTE
   remetente: IPessoaJuridica
   destinatario: IPessoaJuridica

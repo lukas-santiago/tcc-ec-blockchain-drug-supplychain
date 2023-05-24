@@ -1,34 +1,23 @@
 import * as uuidgen from 'uuid'
 import { Context } from 'fabric-contract-api'
 
-import { UUID } from '../definitions/types/types'
-import { IUUIDGenerator } from '../definitions/interfaces/utils.interface'
+import { uuid } from '../definitions/types/types'
 
-/**
- * Classe responsável por gerar UUIDs (Universally Unique Identifiers) na versão 5.
- * O namespace adotado é o MSPID (Membership Service Provider ID) provido pela HyperLedger Cotract API.
- */
-export class UUIDGenerator implements IUUIDGenerator {
-  /**
-   * Gera um identificador único usando o contexto fornecido e a string a ser hashada.
-   *
-   * @param {Contexto} contexto - o objeto de contexto usado para recuperar o MSPID
-   * @param {string} stringParaHash - a string a ser hashada e usada no UUID
-   * @return {string} - o UUID gerado como uma string
-   */
-  getUUID(context: Context, stringToHash: UUID) {
-    const MSPID = context.clientIdentity.getMSPID()
+export class UUIDGenerator {
+  newUUID(): uuid { //context: Context, stringToHash: uuid
+    // const defaultNameSpace = 'da14e742-91e4-4088-9ff9-f7cef3de5561'
 
-    return uuidgen.v5(stringToHash, MSPID)
+    // let MSPID = uuidgen.v4()
+    // try {
+    //   MSPID = uuidgen.v5(context.clientIdentity.getMSPID(), defaultNameSpace)
+    // } catch (error) {
+    //   console.log(error)
+    //   MSPID = uuidgen.v4()
+    // }
+
+    return uuidgen.v4()
   }
-
-  /**
-   * Valida um UUID verificando se é uma string de UUID válida e se sua versão é 5.
-   *
-   * @param {UUID} uuid - o UUID a ser validado
-   * @return {boolean} true se o UUID for válido e sua versão for 5, false caso contrário
-   */
-  validateUUID(uuid: UUID): boolean {
-    return uuidgen.validate(uuid) && uuidgen.version(uuid) === 5
+  validateUUID(uuid: uuid): boolean {
+    return uuidgen.validate(uuid) && uuidgen.version(uuid) === 4
   }
 }

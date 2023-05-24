@@ -1,9 +1,9 @@
-import { IAtividade, IPessoaJuridica } from '.'
-import { UUID } from '../types/types'
+import { DefaultType, IAtividade, IPessoaJuridica } from '.'
+import { uuid } from '../types/types'
 
 export interface IMedicamento {
-  uuid: UUID
-  uuidMedicamentoCatalogo: UUID
+  uuid: uuid
+  uuidMedicamentoCatalogo: uuid
   serial: string
   lote?: string
   rotulos: string[]
@@ -14,7 +14,7 @@ export interface IMedicamento {
 }
 
 export interface ILote {
-  uuid: UUID
+  uuid: uuid
   lote: string
   empresa: IPessoaJuridica
   status: string
@@ -22,10 +22,9 @@ export interface ILote {
   extras: string
 }
 
-export interface IMedicamentoCatalogo {
-  uuid: UUID
+export interface IMedicamentoCatalogo extends DefaultType {
   nome: string
-  empresa: IPessoaJuridica
+  uuidEmpresa: string
   unidade: string
   rotulos: string[]
   retemPrescricaoMedica: boolean
