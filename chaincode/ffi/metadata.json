@@ -85,6 +85,172 @@
         "version": ""
       }
     },
+    "PessoaJuridicaContract": {
+      "name": "PessoaJuridicaContract",
+      "contractInstance": {
+        "name": "PessoaJuridicaContract"
+      },
+      "transactions": [
+        {
+          "tag": [
+            "EVALUATE"
+          ],
+          "parameters": [
+            {
+              "name": "uuid",
+              "description": "",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "name": "exists"
+        },
+        {
+          "tag": [
+            "EVALUATE"
+          ],
+          "parameters": [
+            {
+              "name": "uuid",
+              "description": "",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "name": "get"
+        },
+        {
+          "tag": [
+            "EVALUATE"
+          ],
+          "parameters": [],
+          "name": "getAll"
+        },
+        {
+          "tag": [
+            "SUBMIT",
+            "submitTx"
+          ],
+          "parameters": [
+            {
+              "name": "json",
+              "description": "",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "name": "create"
+        },
+        {
+          "tag": [
+            "SUBMIT",
+            "submitTx"
+          ],
+          "parameters": [
+            {
+              "name": "uuid",
+              "description": "",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "name": "delete"
+        }
+      ],
+      "info": {
+        "title": "PessoaJuridicaContract",
+        "description": "",
+        "name": "PessoaJuridicaContract",
+        "version": ""
+      }
+    },
+    "MedicamentoCatalogoContract": {
+      "name": "MedicamentoCatalogoContract",
+      "contractInstance": {
+        "name": "MedicamentoCatalogoContract"
+      },
+      "transactions": [
+        {
+          "tag": [
+            "EVALUATE"
+          ],
+          "parameters": [
+            {
+              "name": "uuid",
+              "description": "",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "name": "exists"
+        },
+        {
+          "tag": [
+            "EVALUATE"
+          ],
+          "parameters": [
+            {
+              "name": "uuid",
+              "description": "",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "name": "get"
+        },
+        {
+          "tag": [
+            "EVALUATE"
+          ],
+          "parameters": [],
+          "name": "getAll"
+        },
+        {
+          "tag": [
+            "SUBMIT",
+            "submitTx"
+          ],
+          "parameters": [
+            {
+              "name": "json",
+              "description": "",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "name": "create"
+        },
+        {
+          "tag": [
+            "SUBMIT",
+            "submitTx"
+          ],
+          "parameters": [
+            {
+              "name": "uuid",
+              "description": "",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "name": "delete"
+        }
+      ],
+      "info": {
+        "title": "MedicamentoCatalogoContract",
+        "description": "",
+        "name": "MedicamentoCatalogoContract",
+        "version": ""
+      }
+    },
     "org.hyperledger.fabric": {
       "name": "org.hyperledger.fabric",
       "contractInstance": {
