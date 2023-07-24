@@ -67,6 +67,7 @@ export abstract class AbstractContract<Type extends IType> extends Contract {
   @Transaction()
   public async create(ctx: Context, json: string): Promise<void> {
     const data: Type = await this.convert(ctx, json)
+    await this.validate(ctx, data, true)
 
     if (!data.uuid) {
       data.uuid = uuidgen.v4()
@@ -97,7 +98,6 @@ export abstract class AbstractContract<Type extends IType> extends Contract {
     return assetJSON && assetJSON.length > 0
   }
 
-  protected abstract convert(ctx: Context, json: string): Promise<Type>
   protected async getByQuery(ctx: Context, json: unknown): Promise<Array<unknown>> {
     const allResults = []
 
@@ -119,6 +119,7 @@ export abstract class AbstractContract<Type extends IType> extends Contract {
 
     return allResults
   }
+
   protected async getByProperty(ctx: Context, json: any, extra: any = {}): Promise<Array<unknown>> {
     const query = {
       selector: {
@@ -131,10 +132,20 @@ export abstract class AbstractContract<Type extends IType> extends Contract {
 
     return allResults
   }
+
+  protected abstract convert(ctx: Context, json: string): Promise<Type>
+  protected abstract validate(ctx: Context, data: Type, throwError?: boolean): Promise<boolean>
 }
 
 @Info({ title: 'TestTypeContract', description: '' })
 export class TestTypeContract extends AbstractContract<TestType> {
+  protected async validate(
+    ctx: Context,
+    data: TestType,
+    throwError?: boolean | undefined
+  ): Promise<boolean> {
+    return true
+  }
   constructor() {
     super('TestTypeContract')
   }
@@ -163,6 +174,16 @@ export class PessoaJuridicaContract extends AbstractContract<PessoaJuridica> {
 
     const data: PessoaJuridica = obj
 
+    return data
+  }
+
+  protected async validate(
+    ctx: Context,
+    data: PessoaJuridica,
+    throwError: boolean | undefined = false
+  ): Promise<boolean> {
+    let validate = true
+
     const searchResults = (await this.getByProperty(ctx, {
       $or: [
         {
@@ -178,14 +199,43 @@ export class PessoaJuridicaContract extends AbstractContract<PessoaJuridica> {
       ],
     })) as PessoaJuridica[]
 
-    if (searchResults.length !== 0) throw new AlreadyExistsError(`${data.cnpj}/${data.nome}`)
+    if (searchResults.length !== 0) {
+      validate = false
+      if (throwError) throw new AlreadyExistsError(data.uuid!)
+    }
 
-    return data
+    return validate
   }
 }
 
 @Info({ title: 'MedicamentoCatalogoContract', description: '' })
 export class MedicamentoCatalogoContract extends AbstractContract<MedicamentoCatalogo> {
+  protected async validate(
+    ctx: Context,
+    data: MedicamentoCatalogo,
+    throwError: boolean | undefined = false
+  ): Promise<boolean> {
+    let validate = true
+
+    if (data.uuidEmpresa) {
+      const exists =
+        (
+          (await this.getByQuery(ctx, {
+            selector: {
+              contractType: 'PessoaJuridicaContract',
+              uuid: data.uuidEmpresa,
+            },
+          })) as PessoaJuridica[]
+        ).length == 1
+
+      if (!exists) {
+        validate = false
+        if (throwError) throw new NotFoundError(data.uuidEmpresa, 'uuidEmpresa')
+      }
+    }
+
+    return validate
+  }
   constructor() {
     super('MedicamentoCatalogoContract')
   }
@@ -211,26 +261,39 @@ export class MedicamentoCatalogoContract extends AbstractContract<MedicamentoCat
 
     const data: MedicamentoCatalogo = obj
 
-    if (data.uuidEmpresa) {
-      const exists =
-        (
-          (await this.getByQuery(ctx, {
-            selector: {
-              contractType: 'PessoaJuridicaContract',
-              uuid: data.uuidEmpresa,
-            },
-          })) as PessoaJuridica[]
-        ).length == 1
-
-      if (!exists) throw new NotFoundError(data.uuidEmpresa, 'uuidEmpresa')
-    }
-
     return data
   }
 }
 
 @Info({ title: 'MedicamentoContract', description: '' })
 export class MedicamentoContract extends AbstractContract<Medicamento> {
+  protected async validate(
+    ctx: Context,
+    data: Medicamento,
+    throwError: boolean | undefined = false
+  ): Promise<boolean> {
+    let validate = true
+
+    if (data.uuidMedicamentoCatalogo) {
+      const exists =
+        (
+          (await this.getByQuery(ctx, {
+            selector: {
+              contractType: 'MedicamentoCatalogoContract',
+              uuid: data.uuidMedicamentoCatalogo,
+            },
+          })) as PessoaJuridica[]
+        ).length == 1
+
+      if (!exists) {
+        validate = false
+        if (throwError)
+          throw new NotFoundError(data.uuidMedicamentoCatalogo, 'uuidMedicamentoCatalogo')
+      }
+    }
+
+    return validate
+  }
   constructor() {
     super('MedicamentoContract')
   }
@@ -253,20 +316,6 @@ export class MedicamentoContract extends AbstractContract<Medicamento> {
     }
 
     const data: Medicamento = obj
-
-    if (data.uuidMedicamentoCatalogo) {
-      const exists =
-        (
-          (await this.getByQuery(ctx, {
-            selector: {
-              contractType: 'MedicamentoCatalogoContract',
-              uuid: data.uuidMedicamentoCatalogo,
-            },
-          })) as PessoaJuridica[]
-        ).length == 1
-
-      if (!exists) throw new NotFoundError(data.uuidMedicamentoCatalogo, 'uuidMedicamentoCatalogo')
-    }
 
     return data
   }
