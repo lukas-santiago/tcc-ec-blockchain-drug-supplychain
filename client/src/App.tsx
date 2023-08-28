@@ -1,10 +1,10 @@
-function App() {
+import { RouterProvider } from '@tanstack/react-router'
+import { router } from './routes/router'
 
+function App() {
   return (
     <>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <RouterProvider router={router} />
     </>
   )
 }
