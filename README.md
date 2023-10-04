@@ -1,7 +1,13 @@
-# Sistema distribuído de Cadeia de Suprimentos para Medicamentos
+# Sample Hardhat Project
 
-## Trabalho de Conclusão de Curso
+This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
 
-    Repositório destinado a conter parte do TCC para graduação do Bacharelado em Engenharia da Computação
+Try running some of the following tasks:
 
-## Introdução
+```shell
+npx hardhat help
+npx hardhat test
+REPORT_GAS=true npx hardhat test
+npx hardhat node
+npx hardhat run scripts/deploy.js
+```
