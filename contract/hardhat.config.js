@@ -11,6 +11,7 @@ module.exports = {
       },
     },
   },
+  defaultNetwork: "running",
   networks: {
     zksync_testnet: {
       url: "https://zksync2-testnet.zksync.dev",
@@ -23,6 +24,13 @@ module.exports = {
       ethNetwork: "mainnet",
       chainId: 324,
       zksync: true,
+    },
+    hardhat: {
+      chainId: 1337,
+    },
+    running: {
+      url: "http://localhost:8545",
+      chainId: 1337,
     },
   },
   paths: {
