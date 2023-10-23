@@ -16,7 +16,10 @@ contract User {
     function addUser(bytes32 name) public {
         users[msg.sender] = UserStruct(msg.sender, name);
     }
-    function getUser(address wallet) view public returns (UserStruct memory company) {
+
+    function getUser(
+        address wallet
+    ) public view returns (UserStruct memory company) {
         return users[wallet];
     }
 }
@@ -39,7 +42,10 @@ contract Company {
         companiesCount++;
         companies[companiesCount] = CompanyStruct(companiesCount, name);
     }
-    function getCompany(uint16 companyId) view public returns (CompanyStruct memory company) {
+
+    function getCompany(
+        uint16 companyId
+    ) public view returns (CompanyStruct memory company) {
         return companies[companyId];
     }
 }
