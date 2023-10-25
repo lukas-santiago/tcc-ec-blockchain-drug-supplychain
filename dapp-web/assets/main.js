@@ -1,5 +1,6 @@
 import './style.scss'
-import { ethers } from "ethers";
+import { Contract, ethers } from "ethers";
+import contractInfo from '../contract-info.json'
 
 document.querySelector('#app').innerHTML = `
   <div>
@@ -28,17 +29,28 @@ async function etherInitialize() {
     // const signer = provider.getSigner()
   }
 
-  let blockNumber = await provider.getBlockNumber()
+  // let blockNumber = await provider.getBlockNumber()
 
-  let balance = await provider.getBalance(signer.address)
-  console.log({
-    address: signer.address,
-    blockNumber,
-    balance: {
-      raw: balance,
-      value: ethers.formatEther(balance) + " ETH"
-    }
-  })
+  // let balance = await provider.getBalance(signer.address)
+  // console.log({
+  //   address: signer.address,
+  //   blockNumber,
+  //   balance: {
+  //     raw: balance,
+  //     value: ethers.formatEther(balance) + " ETH"
+  //   }
+  // })
+
+  // console.log(contractInfo.abi)
+
+
+  const contract = new Contract(contractInfo.address, contractInfo.abi, provider)
+  console.log('address', await contract.getAddress())
+  const value = await contract.getValue()
+  console.log('value', value, ethers.toUtf8String(value))
+
+  window['contract'] = contract
+  window['ethers'] = ethers
 }
 
 /**

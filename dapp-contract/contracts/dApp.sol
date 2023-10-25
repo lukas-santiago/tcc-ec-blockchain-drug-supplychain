@@ -22,6 +22,10 @@ contract User {
     ) public view returns (UserStruct memory company) {
         return users[wallet];
     }
+
+    function getValue() public pure returns (bytes memory value) {
+        return "Ola";
+    }
 }
 
 contract Company {
