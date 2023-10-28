@@ -1,5 +1,5 @@
-require("dotenv").config();
-require("@nomicfoundation/hardhat-toolbox");
+require('dotenv').config()
+require("@nomicfoundation/hardhat-toolbox")
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -21,9 +21,8 @@ module.exports = {
     polygon_testnet: {
       url: `https://polygon-mumbai.infura.io/v3/${process.env.INFURA_API_KEY}`,
       accounts: [`0x` + process.env.PRIVATE_KEY],
-      gasPrice: 1000,
       saveDeployments: true,
-      deploy: ["scripts/"],
+      deploy: ["scripts/deploy.js"],
     },
     // palm_mainnet: {
     //   url: `https://palm-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
@@ -35,5 +34,5 @@ module.exports = {
   },
   namedAccounts: {
     deployer: 0
-  },
-};
+  }
+}

@@ -1,0 +1,125 @@
+{
+    "contractName": "dApp",
+    "abi": [
+        {
+            "inputs": [
+                {
+                    "internalType": "bytes32",
+                    "name": "name",
+                    "type": "bytes32"
+                }
+            ],
+            "name": "addCompany",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "bytes32",
+                    "name": "name",
+                    "type": "bytes32"
+                }
+            ],
+            "name": "addUser",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "wallet",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint16",
+                    "name": "companyId",
+                    "type": "uint16"
+                }
+            ],
+            "name": "addUserCompany",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint16",
+                    "name": "companyId",
+                    "type": "uint16"
+                }
+            ],
+            "name": "getCompany",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "internalType": "struct Company.CompanyStruct",
+                    "name": "company",
+                    "type": "tuple"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "wallet",
+                    "type": "address"
+                }
+            ],
+            "name": "getUser",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "address",
+                            "name": "wallet",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "internalType": "struct User.UserStruct",
+                    "name": "company",
+                    "type": "tuple"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getValue",
+            "outputs": [
+                {
+                    "internalType": "bytes",
+                    "name": "value",
+                    "type": "bytes"
+                }
+            ],
+            "stateMutability": "pure",
+            "type": "function"
+        }
+    ],
+    "address": "0xAC489Fc6Eb27F6b9Fbf10F907D271CD8683e6a22"
+}
