@@ -1,8 +1,8 @@
-require('dotenv').config()
-require("@nomicfoundation/hardhat-toolbox")
+import 'dotenv/config'
+import '@nomicfoundation/hardhat-toolbox'
 
 /** @type import('hardhat/config').HardhatUserConfig */
-module.exports = {
+export default {
   solidity: "0.8.18",
   settings: {
     optimizer: {
@@ -34,5 +34,12 @@ module.exports = {
   },
   namedAccounts: {
     deployer: 0
-  }
+  },
+  typechain: {
+    outDir: 'types',
+    // target: 'ethers-v6',
+    alwaysGenerateOverloads: false, // should overloads with full signatures like deposit(uint256) be generated always, even if there are no overloads?
+    externalArtifacts: ['externalArtifacts/*.json'], // optional array of glob patterns with external artifacts to process (for example external libs from node_modules)
+    dontOverrideCompile: false // defaults to false
+  },
 }
