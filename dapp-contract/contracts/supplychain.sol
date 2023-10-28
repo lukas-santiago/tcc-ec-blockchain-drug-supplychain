@@ -1,28 +1,40 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
-contract CompanyOwner {
-    // CompanyManagement
+contract Resources {
     constructor() {
         companiesCount = 0;
     }
 
+    // Company
     struct CompanyTypeStruct {
         bool isManufacture;
         bool isIntermediate;
         bool isEndPoint;
     }
-
     struct CompanyStruct {
         uint16 companyId;
         bytes32 name;
         CompanyTypeStruct companyType;
         bool active;
     }
+    uint16 public companiesCount;
+    mapping(uint16 => CompanyStruct) public companies;
 
-    uint16 companiesCount;
-    mapping(uint16 => CompanyStruct) companies;
+    // Catalog
+    struct CatalogStruct {
+        uint16 catalogId;
+        uint16 companyId;
+        bytes32 productName;
+        bool active;
+    }
 
+    uint16 public catalogCount;
+    mapping(uint16 => CatalogStruct) public catalogs;
+}
+
+contract CompanyOwner is Resources {
+    // CompanyManagement
     function addCompany(
         bytes32 name,
         CompanyTypeStruct memory companyType
@@ -60,19 +72,24 @@ contract CompanyOwner {
     // AccessManagement
 }
 
-
-contract ManufacturerCompany {
-    
-
-    struct CatalogStruct {
-    uint16 catalogCount;
-        
+contract ManufacturerCompany is Resources {
+    function addCatalog(uint16 companyId, bytes32 name) public {
+        catalogCount++;
+        catalogs[catalogCount] = CatalogStruct(
+            catalogCount,
+            companyId,
+            name,
+            true
+        );
     }
 
-    uint32 catalogCount;
-    mapping (uint32 => ) name;
+    function editCatalogName(uint16 catalogId, bytes32 name) public {
+        catalogs[catalogId].productName = name;
+    }
 
-    constructor() {
-        
+    function disableCatalog(uint16 catalogId) public {
+        catalogs[catalogId].active = false;
     }
 }
+
+contract dApp is CompanyOwner, ManufacturerCompany {}
