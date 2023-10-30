@@ -1,8 +1,8 @@
 import 'dotenv/config'
-import '@nomicfoundation/hardhat-toolbox'
 import '@typechain/hardhat'
 import '@nomicfoundation/hardhat-ethers'
 import '@nomicfoundation/hardhat-chai-matchers'
+import '@nomicfoundation/hardhat-network-helpers'
 
 /** @type import('hardhat/config').HardhatUserConfig */
 export default {
