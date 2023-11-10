@@ -1,0 +1,2049 @@
+[
+    {
+        "contractName": "dApp",
+        "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+        "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "abi": {
+            "full": [
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": false,
+                            "internalType": "uint16",
+                            "name": "activityId",
+                            "type": "uint16"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "string",
+                            "name": "activity",
+                            "type": "string"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "address",
+                            "name": "actor",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "timestamp",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "ActivityRegistered",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": false,
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "bool",
+                            "name": "isManufacture",
+                            "type": "bool"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "bool",
+                            "name": "isIntermediate",
+                            "type": "bool"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "bool",
+                            "name": "isEndPoint",
+                            "type": "bool"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        }
+                    ],
+                    "name": "CompanyRegistered",
+                    "type": "event"
+                },
+                {
+                    "inputs": [],
+                    "name": "activityCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "name": "addCatalog",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        },
+                        {
+                            "components": [
+                                {
+                                    "internalType": "bool",
+                                    "name": "isManufacture",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isIntermediate",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isEndPoint",
+                                    "type": "bool"
+                                }
+                            ],
+                            "internalType": "struct Models.CompanyTypeModel",
+                            "name": "companyType",
+                            "type": "tuple"
+                        }
+                    ],
+                    "name": "addCompany",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16[]",
+                            "name": "productIds",
+                            "type": "uint16[]"
+                        },
+                        {
+                            "internalType": "uint16",
+                            "name": "manufacturerId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "quantity",
+                            "type": "uint32"
+                        }
+                    ],
+                    "name": "addLot",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "catalogId",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "addProduct",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "catalogCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "catalogs",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "catalogId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "productName",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "companies",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        },
+                        {
+                            "components": [
+                                {
+                                    "internalType": "bool",
+                                    "name": "isManufacture",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isIntermediate",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isEndPoint",
+                                    "type": "bool"
+                                }
+                            ],
+                            "internalType": "struct Models.CompanyTypeModel",
+                            "name": "companyType",
+                            "type": "tuple"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "companiesCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "lotId",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "confirmLot",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "catalogId",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "disableCatalog",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "disableCompany",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "lotId",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "disableLot",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "catalogId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "name": "editCatalogName",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "name": "editCompanyName",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "components": [
+                                {
+                                    "internalType": "bool",
+                                    "name": "isManufacture",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isIntermediate",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isEndPoint",
+                                    "type": "bool"
+                                }
+                            ],
+                            "internalType": "struct Models.CompanyTypeModel",
+                            "name": "companyType",
+                            "type": "tuple"
+                        }
+                    ],
+                    "name": "editCompanyType",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "lotId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint16[]",
+                            "name": "newProductIds",
+                            "type": "uint16[]"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "newQuantity",
+                            "type": "uint32"
+                        }
+                    ],
+                    "name": "editLot",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "lotActivities",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "activityId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint16",
+                            "name": "lotId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "activity",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "actor",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "started_at",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "finished",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "finished_at",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "lotCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "lots",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "lotId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint16",
+                            "name": "manufacturerId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "quantity",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "confirmed",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "productCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "products",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "productId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint16",
+                            "name": "catalogId",
+                            "type": "uint16"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "activity",
+                            "type": "string"
+                        }
+                    ],
+                    "name": "registerActivity",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                }
+            ],
+            "humanReadableAbi": [
+                "event ActivityRegistered(uint16 activityId, uint16 companyId, string activity, address actor, uint256 timestamp)",
+                "event CompanyRegistered(uint16 companyId, bytes32 name, bool isManufacture, bool isIntermediate, bool isEndPoint, bool active)",
+                "function activityCount() view returns (uint16)",
+                "function addCatalog(uint16 companyId, bytes32 name)",
+                "function addCompany(bytes32 name, tuple(bool isManufacture, bool isIntermediate, bool isEndPoint) companyType)",
+                "function addLot(uint16[] productIds, uint16 manufacturerId, uint32 quantity)",
+                "function addProduct(uint16 catalogId)",
+                "function catalogCount() view returns (uint16)",
+                "function catalogs(uint16) view returns (uint16 catalogId, uint16 companyId, bytes32 productName, bool active)",
+                "function companies(uint16) view returns (uint16 companyId, bytes32 name, tuple(bool isManufacture, bool isIntermediate, bool isEndPoint) companyType, bool active)",
+                "function companiesCount() view returns (uint16)",
+                "function confirmLot(uint16 lotId)",
+                "function disableCatalog(uint16 catalogId)",
+                "function disableCompany(uint16 companyId)",
+                "function disableLot(uint16 lotId)",
+                "function editCatalogName(uint16 catalogId, bytes32 name)",
+                "function editCompanyName(uint16 companyId, bytes32 name)",
+                "function editCompanyType(uint16 companyId, tuple(bool isManufacture, bool isIntermediate, bool isEndPoint) companyType)",
+                "function editLot(uint16 lotId, uint16[] newProductIds, uint32 newQuantity)",
+                "function lotActivities(uint16) view returns (uint16 activityId, uint16 lotId, string activity, address actor, uint256 started_at, bool finished, uint256 finished_at)",
+                "function lotCount() view returns (uint16)",
+                "function lots(uint16) view returns (uint16 lotId, uint16 manufacturerId, uint32 quantity, bool confirmed, bool active)",
+                "function productCount() view returns (uint16)",
+                "function products(uint16) view returns (uint16 productId, uint16 catalogId)",
+                "function registerActivity(uint16 companyId, string activity)"
+            ],
+            "humanReadableAbiMinified": [
+                "event ActivityRegistered(uint16,uint16,string,address,uint256)",
+                "event CompanyRegistered(uint16,bytes32,bool,bool,bool,bool)",
+                "function activityCount() view returns (uint16)",
+                "function addCatalog(uint16,bytes32)",
+                "function addCompany(bytes32,tuple(bool,bool,bool))",
+                "function addLot(uint16[],uint16,uint32)",
+                "function addProduct(uint16)",
+                "function catalogCount() view returns (uint16)",
+                "function catalogs(uint16) view returns (uint16,uint16,bytes32,bool)",
+                "function companies(uint16) view returns (uint16,bytes32,tuple(bool,bool,bool),bool)",
+                "function companiesCount() view returns (uint16)",
+                "function confirmLot(uint16)",
+                "function disableCatalog(uint16)",
+                "function disableCompany(uint16)",
+                "function disableLot(uint16)",
+                "function editCatalogName(uint16,bytes32)",
+                "function editCompanyName(uint16,bytes32)",
+                "function editCompanyType(uint16,tuple(bool,bool,bool))",
+                "function editLot(uint16,uint16[],uint32)",
+                "function lotActivities(uint16) view returns (uint16,uint16,string,address,uint256,bool,uint256)",
+                "function lotCount() view returns (uint16)",
+                "function lots(uint16) view returns (uint16,uint16,uint32,bool,bool)",
+                "function productCount() view returns (uint16)",
+                "function products(uint16) view returns (uint16,uint16)",
+                "function registerActivity(uint16,string)"
+            ]
+        },
+        "deploymentTransaction": {
+            "accessList": [],
+            "blockNumber": 1,
+            "blockHash": "0xc2acc02c388020acc1d7869817839eeee2ee61ca5e053d6b006c5ab0488b67d4",
+            "chainId": "31337",
+            "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "gasLimit": "18800000",
+            "gasPrice": "1000000000",
+            "hash": "0x922d7cb0ee3e011484ea168bce2f730722b2364a4b49d1ced7e4e175f4940f0d",
+            "maxFeePerGas": "1000000000",
+            "maxPriorityFeePerGas": "1000000000",
+            "signature": {
+                "_type": "signature",
+                "networkV": null,
+                "r": "0xdf9776480e7b77d3f73d6ff1a87c5abfd32cff053811a1059f8e43c3daf7ee4e",
+                "s": "0x677ff37706aabfee4853496206b6d3d3949baa4a5b527f1e768655b848f07e82",
+                "v": 28
+            },
+            "to": null,
+            "type": 2,
+            "value": "0"
+        },
+        "network": "hardhat",
+        "deployed_at": "2023-11-03T02:15:17.566Z",
+        "deployed_at_unix": 1698977717566
+    },
+    {
+        "contractName": "dApp",
+        "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+        "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "abi": {
+            "full": [
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": false,
+                            "internalType": "uint16",
+                            "name": "activityId",
+                            "type": "uint16"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "string",
+                            "name": "activity",
+                            "type": "string"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "address",
+                            "name": "actor",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "timestamp",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "ActivityRegistered",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": false,
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "bool",
+                            "name": "isManufacture",
+                            "type": "bool"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "bool",
+                            "name": "isIntermediate",
+                            "type": "bool"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "bool",
+                            "name": "isEndPoint",
+                            "type": "bool"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        }
+                    ],
+                    "name": "CompanyRegistered",
+                    "type": "event"
+                },
+                {
+                    "inputs": [],
+                    "name": "activityCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "name": "addCatalog",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        },
+                        {
+                            "components": [
+                                {
+                                    "internalType": "bool",
+                                    "name": "isManufacture",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isIntermediate",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isEndPoint",
+                                    "type": "bool"
+                                }
+                            ],
+                            "internalType": "struct Models.CompanyTypeModel",
+                            "name": "companyType",
+                            "type": "tuple"
+                        }
+                    ],
+                    "name": "addCompany",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16[]",
+                            "name": "productIds",
+                            "type": "uint16[]"
+                        },
+                        {
+                            "internalType": "uint16",
+                            "name": "manufacturerId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "quantity",
+                            "type": "uint32"
+                        }
+                    ],
+                    "name": "addLot",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "catalogId",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "addProduct",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "catalogCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "catalogs",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "catalogId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "productName",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "companies",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        },
+                        {
+                            "components": [
+                                {
+                                    "internalType": "bool",
+                                    "name": "isManufacture",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isIntermediate",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isEndPoint",
+                                    "type": "bool"
+                                }
+                            ],
+                            "internalType": "struct Models.CompanyTypeModel",
+                            "name": "companyType",
+                            "type": "tuple"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "companiesCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "lotId",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "confirmLot",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "catalogId",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "disableCatalog",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "disableCompany",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "lotId",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "disableLot",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "catalogId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "name": "editCatalogName",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "name": "editCompanyName",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "components": [
+                                {
+                                    "internalType": "bool",
+                                    "name": "isManufacture",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isIntermediate",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isEndPoint",
+                                    "type": "bool"
+                                }
+                            ],
+                            "internalType": "struct Models.CompanyTypeModel",
+                            "name": "companyType",
+                            "type": "tuple"
+                        }
+                    ],
+                    "name": "editCompanyType",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "lotId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint16[]",
+                            "name": "newProductIds",
+                            "type": "uint16[]"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "newQuantity",
+                            "type": "uint32"
+                        }
+                    ],
+                    "name": "editLot",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "lotActivities",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "activityId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint16",
+                            "name": "lotId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "activity",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "actor",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "started_at",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "finished",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "finished_at",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "lotCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "lots",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "lotId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint16",
+                            "name": "manufacturerId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "quantity",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "confirmed",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "productCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "products",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "productId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint16",
+                            "name": "catalogId",
+                            "type": "uint16"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "activity",
+                            "type": "string"
+                        }
+                    ],
+                    "name": "registerActivity",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                }
+            ],
+            "humanReadableAbi": [
+                "event ActivityRegistered(uint16 activityId, uint16 companyId, string activity, address actor, uint256 timestamp)",
+                "event CompanyRegistered(uint16 companyId, bytes32 name, bool isManufacture, bool isIntermediate, bool isEndPoint, bool active)",
+                "function activityCount() view returns (uint16)",
+                "function addCatalog(uint16 companyId, bytes32 name)",
+                "function addCompany(bytes32 name, tuple(bool isManufacture, bool isIntermediate, bool isEndPoint) companyType)",
+                "function addLot(uint16[] productIds, uint16 manufacturerId, uint32 quantity)",
+                "function addProduct(uint16 catalogId)",
+                "function catalogCount() view returns (uint16)",
+                "function catalogs(uint16) view returns (uint16 catalogId, uint16 companyId, bytes32 productName, bool active)",
+                "function companies(uint16) view returns (uint16 companyId, bytes32 name, tuple(bool isManufacture, bool isIntermediate, bool isEndPoint) companyType, bool active)",
+                "function companiesCount() view returns (uint16)",
+                "function confirmLot(uint16 lotId)",
+                "function disableCatalog(uint16 catalogId)",
+                "function disableCompany(uint16 companyId)",
+                "function disableLot(uint16 lotId)",
+                "function editCatalogName(uint16 catalogId, bytes32 name)",
+                "function editCompanyName(uint16 companyId, bytes32 name)",
+                "function editCompanyType(uint16 companyId, tuple(bool isManufacture, bool isIntermediate, bool isEndPoint) companyType)",
+                "function editLot(uint16 lotId, uint16[] newProductIds, uint32 newQuantity)",
+                "function lotActivities(uint16) view returns (uint16 activityId, uint16 lotId, string activity, address actor, uint256 started_at, bool finished, uint256 finished_at)",
+                "function lotCount() view returns (uint16)",
+                "function lots(uint16) view returns (uint16 lotId, uint16 manufacturerId, uint32 quantity, bool confirmed, bool active)",
+                "function productCount() view returns (uint16)",
+                "function products(uint16) view returns (uint16 productId, uint16 catalogId)",
+                "function registerActivity(uint16 companyId, string activity)"
+            ],
+            "humanReadableAbiMinified": [
+                "event ActivityRegistered(uint16,uint16,string,address,uint256)",
+                "event CompanyRegistered(uint16,bytes32,bool,bool,bool,bool)",
+                "function activityCount() view returns (uint16)",
+                "function addCatalog(uint16,bytes32)",
+                "function addCompany(bytes32,tuple(bool,bool,bool))",
+                "function addLot(uint16[],uint16,uint32)",
+                "function addProduct(uint16)",
+                "function catalogCount() view returns (uint16)",
+                "function catalogs(uint16) view returns (uint16,uint16,bytes32,bool)",
+                "function companies(uint16) view returns (uint16,bytes32,tuple(bool,bool,bool),bool)",
+                "function companiesCount() view returns (uint16)",
+                "function confirmLot(uint16)",
+                "function disableCatalog(uint16)",
+                "function disableCompany(uint16)",
+                "function disableLot(uint16)",
+                "function editCatalogName(uint16,bytes32)",
+                "function editCompanyName(uint16,bytes32)",
+                "function editCompanyType(uint16,tuple(bool,bool,bool))",
+                "function editLot(uint16,uint16[],uint32)",
+                "function lotActivities(uint16) view returns (uint16,uint16,string,address,uint256,bool,uint256)",
+                "function lotCount() view returns (uint16)",
+                "function lots(uint16) view returns (uint16,uint16,uint32,bool,bool)",
+                "function productCount() view returns (uint16)",
+                "function products(uint16) view returns (uint16,uint16)",
+                "function registerActivity(uint16,string)"
+            ]
+        },
+        "deploymentTransaction": {
+            "accessList": [],
+            "blockNumber": 1,
+            "blockHash": "0xbe102ec77ba04be4014ed82375b16b9e7103634f935f1ee925e815d640d86324",
+            "chainId": "31337",
+            "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "gasLimit": "18800000",
+            "gasPrice": "1000000000",
+            "hash": "0x922d7cb0ee3e011484ea168bce2f730722b2364a4b49d1ced7e4e175f4940f0d",
+            "maxFeePerGas": "1000000000",
+            "maxPriorityFeePerGas": "1000000000",
+            "signature": {
+                "_type": "signature",
+                "networkV": null,
+                "r": "0xdf9776480e7b77d3f73d6ff1a87c5abfd32cff053811a1059f8e43c3daf7ee4e",
+                "s": "0x677ff37706aabfee4853496206b6d3d3949baa4a5b527f1e768655b848f07e82",
+                "v": 28
+            },
+            "to": null,
+            "type": 2,
+            "value": "0"
+        },
+        "network": "hardhat",
+        "deployed_at": "2023-11-03T02:48:54.708Z"
+    },
+    {
+        "contractName": "dApp",
+        "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+        "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "abi": {
+            "full": [
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": false,
+                            "internalType": "uint16",
+                            "name": "activityId",
+                            "type": "uint16"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "string",
+                            "name": "activity",
+                            "type": "string"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "address",
+                            "name": "actor",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "timestamp",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "ActivityRegistered",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": false,
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "bool",
+                            "name": "isManufacture",
+                            "type": "bool"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "bool",
+                            "name": "isIntermediate",
+                            "type": "bool"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "bool",
+                            "name": "isEndPoint",
+                            "type": "bool"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        }
+                    ],
+                    "name": "CompanyRegistered",
+                    "type": "event"
+                },
+                {
+                    "inputs": [],
+                    "name": "activityCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "name": "addCatalog",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        },
+                        {
+                            "components": [
+                                {
+                                    "internalType": "bool",
+                                    "name": "isManufacture",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isIntermediate",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isEndPoint",
+                                    "type": "bool"
+                                }
+                            ],
+                            "internalType": "struct Models.CompanyTypeModel",
+                            "name": "companyType",
+                            "type": "tuple"
+                        }
+                    ],
+                    "name": "addCompany",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16[]",
+                            "name": "productIds",
+                            "type": "uint16[]"
+                        },
+                        {
+                            "internalType": "uint16",
+                            "name": "manufacturerId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "quantity",
+                            "type": "uint32"
+                        }
+                    ],
+                    "name": "addLot",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "catalogId",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "addProduct",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "catalogCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "catalogs",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "catalogId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "productName",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "companies",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        },
+                        {
+                            "components": [
+                                {
+                                    "internalType": "bool",
+                                    "name": "isManufacture",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isIntermediate",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isEndPoint",
+                                    "type": "bool"
+                                }
+                            ],
+                            "internalType": "struct Models.CompanyTypeModel",
+                            "name": "companyType",
+                            "type": "tuple"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "companiesCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "lotId",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "confirmLot",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "catalogId",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "disableCatalog",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "disableCompany",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "lotId",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "disableLot",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "catalogId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "name": "editCatalogName",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "name": "editCompanyName",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "components": [
+                                {
+                                    "internalType": "bool",
+                                    "name": "isManufacture",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isIntermediate",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isEndPoint",
+                                    "type": "bool"
+                                }
+                            ],
+                            "internalType": "struct Models.CompanyTypeModel",
+                            "name": "companyType",
+                            "type": "tuple"
+                        }
+                    ],
+                    "name": "editCompanyType",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "lotId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint16[]",
+                            "name": "newProductIds",
+                            "type": "uint16[]"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "newQuantity",
+                            "type": "uint32"
+                        }
+                    ],
+                    "name": "editLot",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "lotActivities",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "activityId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint16",
+                            "name": "lotId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "activity",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "actor",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "started_at",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "finished",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "finished_at",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "lotCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "lots",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "lotId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint16",
+                            "name": "manufacturerId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "quantity",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "confirmed",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "productCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "products",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "productId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "uint16",
+                            "name": "catalogId",
+                            "type": "uint16"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "activity",
+                            "type": "string"
+                        }
+                    ],
+                    "name": "registerActivity",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                }
+            ],
+            "humanReadableAbi": [
+                "event ActivityRegistered(uint16 activityId, uint16 companyId, string activity, address actor, uint256 timestamp)",
+                "event CompanyRegistered(uint16 companyId, bytes32 name, bool isManufacture, bool isIntermediate, bool isEndPoint, bool active)",
+                "function activityCount() view returns (uint16)",
+                "function addCatalog(uint16 companyId, bytes32 name)",
+                "function addCompany(bytes32 name, tuple(bool isManufacture, bool isIntermediate, bool isEndPoint) companyType)",
+                "function addLot(uint16[] productIds, uint16 manufacturerId, uint32 quantity)",
+                "function addProduct(uint16 catalogId)",
+                "function catalogCount() view returns (uint16)",
+                "function catalogs(uint16) view returns (uint16 catalogId, uint16 companyId, bytes32 productName, bool active)",
+                "function companies(uint16) view returns (uint16 companyId, bytes32 name, tuple(bool isManufacture, bool isIntermediate, bool isEndPoint) companyType, bool active)",
+                "function companiesCount() view returns (uint16)",
+                "function confirmLot(uint16 lotId)",
+                "function disableCatalog(uint16 catalogId)",
+                "function disableCompany(uint16 companyId)",
+                "function disableLot(uint16 lotId)",
+                "function editCatalogName(uint16 catalogId, bytes32 name)",
+                "function editCompanyName(uint16 companyId, bytes32 name)",
+                "function editCompanyType(uint16 companyId, tuple(bool isManufacture, bool isIntermediate, bool isEndPoint) companyType)",
+                "function editLot(uint16 lotId, uint16[] newProductIds, uint32 newQuantity)",
+                "function lotActivities(uint16) view returns (uint16 activityId, uint16 lotId, string activity, address actor, uint256 started_at, bool finished, uint256 finished_at)",
+                "function lotCount() view returns (uint16)",
+                "function lots(uint16) view returns (uint16 lotId, uint16 manufacturerId, uint32 quantity, bool confirmed, bool active)",
+                "function productCount() view returns (uint16)",
+                "function products(uint16) view returns (uint16 productId, uint16 catalogId)",
+                "function registerActivity(uint16 companyId, string activity)"
+            ],
+            "humanReadableAbiMinified": [
+                "event ActivityRegistered(uint16,uint16,string,address,uint256)",
+                "event CompanyRegistered(uint16,bytes32,bool,bool,bool,bool)",
+                "function activityCount() view returns (uint16)",
+                "function addCatalog(uint16,bytes32)",
+                "function addCompany(bytes32,tuple(bool,bool,bool))",
+                "function addLot(uint16[],uint16,uint32)",
+                "function addProduct(uint16)",
+                "function catalogCount() view returns (uint16)",
+                "function catalogs(uint16) view returns (uint16,uint16,bytes32,bool)",
+                "function companies(uint16) view returns (uint16,bytes32,tuple(bool,bool,bool),bool)",
+                "function companiesCount() view returns (uint16)",
+                "function confirmLot(uint16)",
+                "function disableCatalog(uint16)",
+                "function disableCompany(uint16)",
+                "function disableLot(uint16)",
+                "function editCatalogName(uint16,bytes32)",
+                "function editCompanyName(uint16,bytes32)",
+                "function editCompanyType(uint16,tuple(bool,bool,bool))",
+                "function editLot(uint16,uint16[],uint32)",
+                "function lotActivities(uint16) view returns (uint16,uint16,string,address,uint256,bool,uint256)",
+                "function lotCount() view returns (uint16)",
+                "function lots(uint16) view returns (uint16,uint16,uint32,bool,bool)",
+                "function productCount() view returns (uint16)",
+                "function products(uint16) view returns (uint16,uint16)",
+                "function registerActivity(uint16,string)"
+            ]
+        },
+        "deploymentTransaction": {
+            "accessList": [],
+            "blockNumber": 1,
+            "blockHash": "0x123afc1f2c65797d6052921041dad1e55a6d59cc6750372ddbb277d9565050e6",
+            "chainId": "31337",
+            "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "gasLimit": "18800000",
+            "gasPrice": "1000000000",
+            "hash": "0x922d7cb0ee3e011484ea168bce2f730722b2364a4b49d1ced7e4e175f4940f0d",
+            "maxFeePerGas": "1000000000",
+            "maxPriorityFeePerGas": "1000000000",
+            "signature": {
+                "_type": "signature",
+                "networkV": null,
+                "r": "0xdf9776480e7b77d3f73d6ff1a87c5abfd32cff053811a1059f8e43c3daf7ee4e",
+                "s": "0x677ff37706aabfee4853496206b6d3d3949baa4a5b527f1e768655b848f07e82",
+                "v": 28
+            },
+            "to": null,
+            "type": 2,
+            "value": "0"
+        },
+        "network": "hardhat",
+        "deployed_at": "2023-11-03T02:49:49.879Z"
+    }
+]

@@ -11,3 +11,41 @@ REPORT_GAS=true npx hardhat test
 npx hardhat node
 npx hardhat run scripts/deploy.js
 ```
+
+Models
+    catalog feature
+        catalogCount
+        catalogs
+    company feature
+        companiesCount
+        companies
+    lot feature
+        lotCount
+        lots
+    product feature
+        productCount
+        products
+        
+
+CompanyOwner
+    company feature
+        addCompany
+        editCompanyName
+        editCompanyType
+        disableCompany
+
+ManufacturerCompany
+    catalog feature
+        addCatalog
+        disableCatalog
+        editCatalogName
+    lot feature
+        addLot
+        disableLot
+    product feature
+        addProduct
+        removeProduct
+    traceability feature
+        confirmLotAndProducts
+
+
