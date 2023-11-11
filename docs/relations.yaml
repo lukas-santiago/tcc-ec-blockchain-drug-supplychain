@@ -1,0 +1,39 @@
+ROLES:
+  - name: PUBLIC
+    methods:
+      - Register
+      - CheckProductCode
+      - CheckLotCode
+
+  - name: DEFAULT
+    methods:
+      - ChooseCompany
+      - SearchProduct
+      - GetAllCompanies
+
+  - name: OWNER
+    methods:
+      - GrantSupervisor
+      - GrantCompany
+
+  - name: COMPANY
+    methods:
+      - AddCompany
+      - DisableOrEnableCompany
+      - EditCompany
+
+  - name: OPERATOR
+    operations:
+      - companyType: Manufacturer
+        methods:
+          - AddProductCatalog
+          - DisableOrEnableProduct
+          - EditProductCatalog
+          - AddLot
+          - EditLot
+          - ConfirmLot
+          - DisableOrEnableLot
+          - AddProduct
+      - companyType: Intermediate
+        methods:
+          - RegisterActivity
