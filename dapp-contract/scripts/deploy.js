@@ -3,7 +3,7 @@ const fs = require('fs/promises')
 const path = require('path')
 
 async function main() {
-  const contract = await ethers.deployContract("dApp")
+  const contract = await ethers.deployContract("SupplyChainDApp")
   await contract.waitForDeployment()
 
   const deploymentInfo = await getDeploymentInfo(contract);
@@ -22,7 +22,7 @@ main().catch((error) => {
 });
 
 async function getDeploymentInfo(contract) {
-  const artifact = await artifacts.readArtifact('dApp');
+  const artifact = await artifacts.readArtifact('SupplyChainDApp');
   const humanReadableAbi = new ethers.Interface(artifact.abi).format(false);
   const humanReadableAbiMinified = new ethers.Interface(artifact.abi).format(true);
 
