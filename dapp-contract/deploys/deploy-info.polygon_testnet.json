@@ -7029,5 +7029,569 @@
         },
         "network": "polygon_testnet",
         "deployed_at": "2023-11-13T15:29:16.036Z"
+    },
+    {
+        "contractName": "SupplyChainDApp",
+        "address": "0x1eCb9c8D609979D4425Ab6704Ba35d3Acd9ba9e6",
+        "owner": "0xBb5d367259465a5E1AF13Fc55188A1e611E08E21",
+        "abi": {
+            "full": [
+                {
+                    "inputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "constructor"
+                },
+                {
+                    "inputs": [],
+                    "name": "AccessControlBadConfirmation",
+                    "type": "error"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "account",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "neededRole",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "name": "AccessControlUnauthorizedAccount",
+                    "type": "error"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "bytes32",
+                            "name": "role",
+                            "type": "bytes32"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "bytes32",
+                            "name": "previousAdminRole",
+                            "type": "bytes32"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "bytes32",
+                            "name": "newAdminRole",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "name": "RoleAdminChanged",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "bytes32",
+                            "name": "role",
+                            "type": "bytes32"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "account",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "sender",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "RoleGranted",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "bytes32",
+                            "name": "role",
+                            "type": "bytes32"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "account",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "sender",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "RoleRevoked",
+                    "type": "event"
+                },
+                {
+                    "inputs": [],
+                    "name": "COMPANY_ROLE",
+                    "outputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "DEFAULT_ADMIN_ROLE",
+                    "outputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "OPERATOR_ROLE",
+                    "outputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "OWNER_ROLE",
+                    "outputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "components": [
+                                {
+                                    "internalType": "uint16",
+                                    "name": "companyId",
+                                    "type": "uint16"
+                                },
+                                {
+                                    "internalType": "bytes32",
+                                    "name": "name",
+                                    "type": "bytes32"
+                                },
+                                {
+                                    "components": [
+                                        {
+                                            "internalType": "bool",
+                                            "name": "isManufacture",
+                                            "type": "bool"
+                                        },
+                                        {
+                                            "internalType": "bool",
+                                            "name": "isIntermediate",
+                                            "type": "bool"
+                                        },
+                                        {
+                                            "internalType": "bool",
+                                            "name": "isEndPoint",
+                                            "type": "bool"
+                                        }
+                                    ],
+                                    "internalType": "struct SupplyChainDApp.CompanyTypeModel",
+                                    "name": "companyType",
+                                    "type": "tuple"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "active",
+                                    "type": "bool"
+                                }
+                            ],
+                            "internalType": "struct SupplyChainDApp.CompanyModel",
+                            "name": "company",
+                            "type": "tuple"
+                        }
+                    ],
+                    "name": "addCompany",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "companies",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        },
+                        {
+                            "components": [
+                                {
+                                    "internalType": "bool",
+                                    "name": "isManufacture",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isIntermediate",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isEndPoint",
+                                    "type": "bool"
+                                }
+                            ],
+                            "internalType": "struct SupplyChainDApp.CompanyTypeModel",
+                            "name": "companyType",
+                            "type": "tuple"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "companiesCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "",
+                            "type": "uint16"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint16",
+                            "name": "companyId",
+                            "type": "uint16"
+                        }
+                    ],
+                    "name": "disableCompany",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "components": [
+                                {
+                                    "internalType": "uint16",
+                                    "name": "companyId",
+                                    "type": "uint16"
+                                },
+                                {
+                                    "internalType": "bytes32",
+                                    "name": "name",
+                                    "type": "bytes32"
+                                },
+                                {
+                                    "components": [
+                                        {
+                                            "internalType": "bool",
+                                            "name": "isManufacture",
+                                            "type": "bool"
+                                        },
+                                        {
+                                            "internalType": "bool",
+                                            "name": "isIntermediate",
+                                            "type": "bool"
+                                        },
+                                        {
+                                            "internalType": "bool",
+                                            "name": "isEndPoint",
+                                            "type": "bool"
+                                        }
+                                    ],
+                                    "internalType": "struct SupplyChainDApp.CompanyTypeModel",
+                                    "name": "companyType",
+                                    "type": "tuple"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "active",
+                                    "type": "bool"
+                                }
+                            ],
+                            "internalType": "struct SupplyChainDApp.CompanyModel",
+                            "name": "company",
+                            "type": "tuple"
+                        }
+                    ],
+                    "name": "editCompany",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "role",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "name": "getRoleAdmin",
+                    "outputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "role",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "account",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "grantRole",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "role",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "account",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "hasRole",
+                    "outputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "register",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "role",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "callerConfirmation",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "renounceRole",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "role",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "account",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "revokeRole",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "bytes4",
+                            "name": "interfaceId",
+                            "type": "bytes4"
+                        }
+                    ],
+                    "name": "supportsInterface",
+                    "outputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "users",
+                    "outputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "registered",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "_address",
+                            "type": "address"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                }
+            ],
+            "humanReadableAbi": [
+                "constructor() nonpayable",
+                "error AccessControlBadConfirmation()",
+                "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+                "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+                "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+                "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+                "function COMPANY_ROLE() view returns (bytes32)",
+                "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+                "function OPERATOR_ROLE() view returns (bytes32)",
+                "function OWNER_ROLE() view returns (bytes32)",
+                "function addCompany(tuple(uint16 companyId, bytes32 name, tuple(bool isManufacture, bool isIntermediate, bool isEndPoint) companyType, bool active) company)",
+                "function companies(uint16) view returns (uint16 companyId, bytes32 name, tuple(bool isManufacture, bool isIntermediate, bool isEndPoint) companyType, bool active)",
+                "function companiesCount() view returns (uint16)",
+                "function disableCompany(uint16 companyId)",
+                "function editCompany(tuple(uint16 companyId, bytes32 name, tuple(bool isManufacture, bool isIntermediate, bool isEndPoint) companyType, bool active) company)",
+                "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+                "function grantRole(bytes32 role, address account)",
+                "function hasRole(bytes32 role, address account) view returns (bool)",
+                "function register()",
+                "function renounceRole(bytes32 role, address callerConfirmation)",
+                "function revokeRole(bytes32 role, address account)",
+                "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+                "function users(address) view returns (bool registered, address _address)"
+            ],
+            "humanReadableAbiMinified": [
+                "constructor() nonpayable",
+                "error AccessControlBadConfirmation()",
+                "error AccessControlUnauthorizedAccount(address,bytes32)",
+                "event RoleAdminChanged(bytes32 indexed,bytes32 indexed,bytes32 indexed)",
+                "event RoleGranted(bytes32 indexed,address indexed,address indexed)",
+                "event RoleRevoked(bytes32 indexed,address indexed,address indexed)",
+                "function COMPANY_ROLE() view returns (bytes32)",
+                "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+                "function OPERATOR_ROLE() view returns (bytes32)",
+                "function OWNER_ROLE() view returns (bytes32)",
+                "function addCompany(tuple(uint16,bytes32,tuple(bool,bool,bool),bool))",
+                "function companies(uint16) view returns (uint16,bytes32,tuple(bool,bool,bool),bool)",
+                "function companiesCount() view returns (uint16)",
+                "function disableCompany(uint16)",
+                "function editCompany(tuple(uint16,bytes32,tuple(bool,bool,bool),bool))",
+                "function getRoleAdmin(bytes32) view returns (bytes32)",
+                "function grantRole(bytes32,address)",
+                "function hasRole(bytes32,address) view returns (bool)",
+                "function register()",
+                "function renounceRole(bytes32,address)",
+                "function revokeRole(bytes32,address)",
+                "function supportsInterface(bytes4) view returns (bool)",
+                "function users(address) view returns (bool,address)"
+            ]
+        },
+        "deploymentTransaction": {
+            "accessList": [],
+            "blockNumber": null,
+            "blockHash": null,
+            "chainId": "80001",
+            "from": "0xBb5d367259465a5E1AF13Fc55188A1e611E08E21",
+            "gasLimit": "1201208",
+            "gasPrice": "1913114583",
+            "hash": "0xdfa710aeb56b92e890617e3bcff9100ed47a04c55fc83e2d64091dbbfb2606f4",
+            "maxFeePerGas": "1913114583",
+            "maxPriorityFeePerGas": "1913114565",
+            "signature": {
+                "_type": "signature",
+                "networkV": null,
+                "r": "0x290a9d3cccce5bad161879efb3f3c8522083f676332034c8ff4f4927f1a32d05",
+                "s": "0x77c8fc1764de308b888bd76c5fc36e977c4800b097069ae71ec398e494bc3e93",
+                "v": 27
+            },
+            "to": null,
+            "type": 2,
+            "value": "0"
+        },
+        "network": "polygon_testnet",
+        "deployed_at": "2023-11-13T17:51:35.880Z"
     }
 ]
