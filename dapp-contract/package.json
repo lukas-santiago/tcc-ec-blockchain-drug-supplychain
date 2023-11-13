@@ -1,0 +1,28 @@
+{
+  "name": "hardhat-project",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.2",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.9",
+    "@nomiclabs/hardhat-etherscan": "^3.1.7",
+    "@openzeppelin/hardhat-upgrades": "^2.3.3",
+    "@typechain/hardhat": "^9.1.0",
+    "@types/chai": "^4.3.9",
+    "@types/mocha": "^10.0.3",
+    "@types/node": "^20.8.9",
+    "chai": "^4.3.10",
+    "hardhat": "^2.18.2",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typechain": "^8.3.2",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0",
+    "@openzeppelin/contracts-upgradeable": "^5.0.0",
+    "dotenv": "^16.3.1"
+  },
+  "scripts": {
+    "test": "hardhat compile --typecheck && hardhat test --typecheck",
+    "test:watch": "npx nodemon --watch test/**.ts --watch contracts/**.sol --exec \"npm run test\""
+  }
+}
