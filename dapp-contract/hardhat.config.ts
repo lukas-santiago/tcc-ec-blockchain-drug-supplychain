@@ -1,9 +1,10 @@
-import 'dotenv/config'
-import '@typechain/hardhat'
-import '@nomicfoundation/hardhat-ethers'
-import '@nomicfoundation/hardhat-chai-matchers'
-import '@nomicfoundation/hardhat-network-helpers'
-import '@nomiclabs/hardhat-etherscan'
+import "dotenv/config";
+import "@typechain/hardhat";
+import "@nomicfoundation/hardhat-ethers";
+import "@nomicfoundation/hardhat-chai-matchers";
+import "@nomicfoundation/hardhat-network-helpers";
+import "@nomiclabs/hardhat-etherscan";
+import "hardhat-contract-sizer";
 
 /** @type import('hardhat/config').HardhatUserConfig */
 export default {
@@ -11,7 +12,7 @@ export default {
   settings: {
     optimizer: {
       enabled: true,
-      runs: 1000000,
+      runs: 200,
     },
   },
   mocha: {
@@ -33,13 +34,20 @@ export default {
     deployer: 0,
   },
   typechain: {
-    outDir: 'types',
-    target: 'ethers-v6',
+    outDir: "types",
+    target: "ethers-v6",
     alwaysGenerateOverloads: false, // should overloads with full signatures like deposit(uint256) be generated always, even if there are no overloads?
-    externalArtifacts: ['externalArtifacts/*.json'], // optional array of glob patterns with external artifacts to process (for example external libs from node_modules)
-    dontOverrideCompile: false // defaults to false
+    externalArtifacts: ["externalArtifacts/*.json"], // optional array of glob patterns with external artifacts to process (for example external libs from node_modules)
+    dontOverrideCompile: false, // defaults to false
   },
   etherscan: {
     apiKey: process.env.POLYGONSCAN_API_KEY,
-  }
-}
+  },
+  contractSizer: {
+    alphaSort: true,
+    disambiguatePaths: false,
+    runOnCompile: true,
+    strict: true,
+    only: ["SupplyChainDApp"],
+  },
+};

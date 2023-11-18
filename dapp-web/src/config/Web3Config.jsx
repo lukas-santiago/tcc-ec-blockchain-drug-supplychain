@@ -8,13 +8,12 @@ import {
   configureChains,
   createConfig,
   useAccount,
+  useContractEvent,
   useContractRead,
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
-import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
-import { InjectedConnector } from "wagmi/connectors/injected";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 import { infuraProvider } from "wagmi/providers/infura";
 import { publicProvider } from "wagmi/providers/public";
@@ -22,7 +21,9 @@ import { publicProvider } from "wagmi/providers/public";
 import { useDebounce } from "@uidotdev/usehooks";
 import React from "react";
 import { Button, Dropdown, DropdownButton, Form, Modal, Spinner } from "react-bootstrap";
+import { stringToHex } from "viem";
 import contractInfo from "../../contract-abis/contract-info.json";
+import { ElevateOperatorModal } from "../routes/company/ElevateOperatorModal";
 
 // 1. Get projectId
 const projectId = "9ef7f1e1ff7dec0aba278a7ba1f4171b";
@@ -49,8 +50,8 @@ const wagmiConfig = createConfig({
   connectors: [
     new WalletConnectConnector({ chains, options: { projectId, showQrModal: false, metadata } }),
     new EIP6963Connector({ chains }),
-    new InjectedConnector({ chains, options: { shimDisconnect: true } }),
-    new CoinbaseWalletConnector({ chains, options: { appName: metadata.name } }),
+    // new InjectedConnector({ chains, options: { shimDisconnect: true } }),
+    // new CoinbaseWalletConnector({ chains, options: { appName: metadata.name } }),
     // new MetaMaskConnector({
     //   chains,
     //   options: {
@@ -69,11 +70,36 @@ export function Web3Config({ children }) {
 }
 
 export default function ConnectButton() {
-  const { address, isConnecting, isDisconnected } = useAccount();
+  const { isConnected } = useAccount();
 
   return (
     <div className="bg-dark d-flex align-items-center text-light gap-4 ps-3 pe-3 rounded">
-      {!isDisconnected && !isConnecting && <AccountData address={address} />}
+      {isConnected && (
+        <>
+          <Button
+            size="sm"
+            variant="outline-light"
+            onClick={() => {
+              window.ethereum
+                .request({
+                  method: "wallet_requestPermissions",
+                  params: [
+                    {
+                      eth_accounts: {},
+                    },
+                  ],
+                })
+                .then((a) => {
+                  console.log({ a });
+                  window.location.reload();
+                });
+            }}
+          >
+            Trocar conta
+          </Button>
+          <AccountData />
+        </>
+      )}
       <w3m-button label="Conectar" loadingLabel="Conectando" />
     </div>
   );
@@ -83,11 +109,28 @@ Web3Config.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function AccountData({ address }) {
+function AccountData() {
+  const { address } = useAccount();
+
   const { data, isLoading, isSuccess, write, isError } = useContractWrite({
     address: contractInfo.address,
     abi: contractInfo.abi,
     functionName: "register",
+  });
+
+  const unwatch = useContractEvent({
+    address: contractInfo.address,
+    abi: contractInfo.abi,
+    eventName: "UserRegistered",
+    args: [address],
+    listener: (event) => {
+      console.log({ event, address });
+      if (event[0]?.args.user === address) {
+        unwatch?.();
+        handleClose();
+        window.location.reload();
+      }
+    },
   });
 
   const [isUser, setIsUser] = React.useState(null);
@@ -102,6 +145,10 @@ function AccountData({ address }) {
       setIsUser(registered || false);
 
       if (!data) handleShow();
+      if (registered) {
+        unwatch?.();
+        handleClose();
+      }
     },
   });
 
@@ -119,7 +166,7 @@ function AccountData({ address }) {
       {isUser && <UserActions />}
       {isUser === false && (
         <>
-          <Button variant="primary" onClick={handleShow} size="sm" className="me-3">
+          <Button variant="success" onClick={handleShow} size="sm" className="me-3">
             Concluir registro
           </Button>
           <Modal show={show} onHide={handleClose}>
@@ -127,14 +174,21 @@ function AccountData({ address }) {
               <Modal.Title>Registrar-se</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              {isLoading ? (
-                <>Para concluir o registro, cheque sua carteira e aprove a transação.</>
+              {isSuccess ? (
+                <p>Parabéns, seu registro foi enviado. Aguarde a transação ser confirmada.</p>
               ) : (
                 <>
-                  <p>
-                    Parece que voce ainda não se registrou. É necessário registrar-se e isso só pode ser feito uma vez.
-                  </p>
-                  {isError && <p>Algo deu errado, tente novamente.</p>}
+                  {isLoading ? (
+                    <>Para concluir o registro, cheque sua carteira e aprove a transação.</>
+                  ) : (
+                    <>
+                      <p>
+                        Parece que voce ainda não se registrou. É necessário registrar-se e isso só pode ser feito uma
+                        vez.
+                      </p>
+                      {isError && <p>Algo deu errado, tente novamente.</p>}
+                    </>
+                  )}
                 </>
               )}
             </Modal.Body>
@@ -165,10 +219,6 @@ function AccountData({ address }) {
   );
 }
 
-AccountData.propTypes = {
-  address: PropTypes.string.isRequired,
-};
-
 function UserActions() {
   const { address } = useAccount();
   const roles = useRoleData(address);
@@ -179,6 +229,11 @@ function UserActions() {
   const handleShow = () => setShow(true);
 
   console.log(roles);
+
+  const [show2, setShow2] = React.useState(false);
+
+  const handleClose2 = () => setShow2(false);
+  const handleShow2 = () => setShow2(true);
 
   return (
     <DropdownButton title="Registrado" variant="primary">
@@ -196,6 +251,18 @@ function UserActions() {
           <Dropdown.ItemText>Gestor</Dropdown.ItemText>
           <Dropdown.Item className="ps-4" href="/company/manage">
             <span>Companhia</span>
+          </Dropdown.Item>
+          <Dropdown.Item className="ps-4" onClick={handleShow2}>
+            <span>Elevar Operadores</span>
+          </Dropdown.Item>
+          {show2 && <ElevateOperatorModal show={show2} handleClose={handleClose2} />}
+        </>
+      )}
+      {roles.OPERATOR === true && (
+        <>
+          <Dropdown.ItemText>Operador</Dropdown.ItemText>
+          <Dropdown.Item className="ps-4" href="/operator/catalog">
+            <span>Gerenciar Catálogo</span>
           </Dropdown.Item>
         </>
       )}
@@ -219,6 +286,7 @@ function useRoleData(address) {
     onSuccess: (data) => {
       setRoles((prev) => ({ ...prev, OWNER: data }));
     },
+    enabled: Boolean(address),
   });
   useContractRead({
     address: contractInfo.address,
@@ -228,6 +296,7 @@ function useRoleData(address) {
     onSuccess: (data) => {
       setRoles((prev) => ({ ...prev, COMPANY: data }));
     },
+    enabled: Boolean(address),
   });
   useContractRead({
     address: contractInfo.address,
@@ -237,20 +306,24 @@ function useRoleData(address) {
     onSuccess: (data) => {
       setRoles((prev) => ({ ...prev, OPERATOR: data }));
     },
+    enabled: Boolean(address),
   });
 
   return roles;
 }
 
 function ElevatePermissionsModal({ show, handleClose }) {
+  const { address } = useAccount();
   const [addressInput, setAddressInput] = React.useState("");
   const debouncedAddress = useDebounce(addressInput);
+
+  const companyRole = stringToHex("COMPANY", { size: 32 });
 
   const { config, error } = usePrepareContractWrite({
     address: contractInfo.address,
     abi: contractInfo.abi,
     functionName: "grantRole",
-    args: ["0x434f4d50414e5900000000000000000000000000000000000000000000000000", debouncedAddress],
+    args: [companyRole, debouncedAddress],
     enabled: Boolean(debouncedAddress),
   });
 
@@ -258,6 +331,21 @@ function ElevatePermissionsModal({ show, handleClose }) {
 
   const { isLoading, isSuccess } = useWaitForTransaction({
     hash: data?.hash,
+  });
+
+  const unwatch = useContractEvent({
+    address: contractInfo.address,
+    abi: contractInfo.abi,
+    eventName: "RoleGranted",
+    args: [companyRole, address],
+    listener: (event) => {
+      console.log(event);
+      if (event[0]?.args?.account === address) {
+        unwatch?.();
+        handleClose();
+        window.location.reload();
+      }
+    },
   });
 
   return (

@@ -8,6 +8,7 @@ import Check from "./routes/Check";
 import { Home } from "./routes/Home";
 import { Web3Config } from "./config/Web3Config";
 import { CompanyManagement } from "./routes/company/CompanyManagement";
+import { CatalogManagement } from "./routes/operator/CatalogManagement";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="check" element={<Check />} />
           <Route path="company/manage" element={<CompanyManagement />} />
+          <Route path="operator/catalog" element={<CatalogManagement />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>
