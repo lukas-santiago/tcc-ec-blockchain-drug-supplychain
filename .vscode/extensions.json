@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        "codeium.codeium",
+        "steoates.autoimport",
+        "dbaeumer.vscode-eslint",
+        "mhutchie.git-graph",
+        "christian-kohler.path-intellisense",
+        "esbenp.prettier-vscode",
+        "nomicfoundation.hardhat-solidity",
+        "redhat.vscode-yaml"
+    ]
+}
