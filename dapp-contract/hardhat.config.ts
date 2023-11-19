@@ -48,6 +48,5 @@ export default {
     disambiguatePaths: false,
     runOnCompile: true,
     strict: true,
-    only: ["SupplyChainDApp"],
   },
 };

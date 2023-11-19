@@ -24,6 +24,7 @@ import { Button, Dropdown, DropdownButton, Form, Modal, Spinner } from "react-bo
 import { stringToHex } from "viem";
 import contractInfo from "../../contract-abis/contract-info.json";
 import { ElevateOperatorModal } from "../routes/company/ElevateOperatorModal";
+import { useRoleData } from "../hooks/useRoleData";
 
 // 1. Get projectId
 const projectId = "9ef7f1e1ff7dec0aba278a7ba1f4171b";
@@ -264,52 +265,13 @@ function UserActions() {
           <Dropdown.Item className="ps-4" href="/operator/catalog">
             <span>Gerenciar Catálogo</span>
           </Dropdown.Item>
+          <Dropdown.Item className="ps-4" href="/operator/lot">
+            <span>Gerenciar Lote</span>
+          </Dropdown.Item>
         </>
       )}
     </DropdownButton>
   );
-}
-
-function useRoleData(address) {
-  const [roles, setRoles] = React.useState({});
-  const availableRoles = {
-    COMPANY: "0x434f4d50414e5900000000000000000000000000000000000000000000000000",
-    OPERATOR: "0x4f50455241544f52000000000000000000000000000000000000000000000000",
-    OWNER: "0x4f574e4552000000000000000000000000000000000000000000000000000000",
-  };
-
-  useContractRead({
-    address: contractInfo.address,
-    abi: contractInfo.abi,
-    functionName: "hasRole",
-    args: [availableRoles.OWNER, address],
-    onSuccess: (data) => {
-      setRoles((prev) => ({ ...prev, OWNER: data }));
-    },
-    enabled: Boolean(address),
-  });
-  useContractRead({
-    address: contractInfo.address,
-    abi: contractInfo.abi,
-    functionName: "hasRole",
-    args: [availableRoles.COMPANY, address],
-    onSuccess: (data) => {
-      setRoles((prev) => ({ ...prev, COMPANY: data }));
-    },
-    enabled: Boolean(address),
-  });
-  useContractRead({
-    address: contractInfo.address,
-    abi: contractInfo.abi,
-    functionName: "hasRole",
-    args: [availableRoles.OPERATOR, address],
-    onSuccess: (data) => {
-      setRoles((prev) => ({ ...prev, OPERATOR: data }));
-    },
-    enabled: Boolean(address),
-  });
-
-  return roles;
 }
 
 function ElevatePermissionsModal({ show, handleClose }) {

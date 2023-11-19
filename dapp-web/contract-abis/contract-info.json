@@ -187,19 +187,6 @@
             "type": "function"
         },
         {
-            "inputs": [],
-            "name": "activityCount",
-            "outputs": [
-                {
-                    "internalType": "uint32",
-                    "name": "",
-                    "type": "uint32"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
             "inputs": [
                 {
                     "internalType": "uint32",
@@ -503,6 +490,11 @@
                             "internalType": "uint32[]",
                             "name": "productCatalogIds",
                             "type": "uint32[]"
+                        },
+                        {
+                            "internalType": "uint32[]",
+                            "name": "lotIds",
+                            "type": "uint32[]"
                         }
                     ],
                     "internalType": "struct SupplyChainDApp.CompanyModel",
@@ -547,6 +539,52 @@
             "inputs": [
                 {
                     "internalType": "uint32",
+                    "name": "catalogId",
+                    "type": "uint32"
+                }
+            ],
+            "name": "getCatalog",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "uint32",
+                            "name": "catalogId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "companyId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "productName",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "uint32[]",
+                            "name": "productIds",
+                            "type": "uint32[]"
+                        }
+                    ],
+                    "internalType": "struct SupplyChainDApp.CatalogModel",
+                    "name": "",
+                    "type": "tuple"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint32",
                     "name": "companyId",
                     "type": "uint32"
                 }
@@ -584,9 +622,65 @@
                             "internalType": "uint32[]",
                             "name": "productCatalogIds",
                             "type": "uint32[]"
+                        },
+                        {
+                            "internalType": "uint32[]",
+                            "name": "lotIds",
+                            "type": "uint32[]"
                         }
                     ],
                     "internalType": "struct SupplyChainDApp.CompanyModel",
+                    "name": "",
+                    "type": "tuple"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint32",
+                    "name": "lotId",
+                    "type": "uint32"
+                }
+            ],
+            "name": "getLot",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "uint32",
+                            "name": "lotId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32[]",
+                            "name": "productIds",
+                            "type": "uint32[]"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "manufacturerId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "quantity",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "confirmed",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        }
+                    ],
+                    "internalType": "struct SupplyChainDApp.LotModel",
                     "name": "",
                     "type": "tuple"
                 }
@@ -673,55 +767,6 @@
                     "internalType": "bool",
                     "name": "",
                     "type": "bool"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "uint32",
-                    "name": "",
-                    "type": "uint32"
-                }
-            ],
-            "name": "lotActivities",
-            "outputs": [
-                {
-                    "internalType": "uint32",
-                    "name": "activityId",
-                    "type": "uint32"
-                },
-                {
-                    "internalType": "uint32",
-                    "name": "lotId",
-                    "type": "uint32"
-                },
-                {
-                    "internalType": "string",
-                    "name": "activity",
-                    "type": "string"
-                },
-                {
-                    "internalType": "address",
-                    "name": "actor",
-                    "type": "address"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "started_at",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "bool",
-                    "name": "finished",
-                    "type": "bool"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "finished_at",
-                    "type": "uint256"
                 }
             ],
             "stateMutability": "view",
@@ -872,29 +917,6 @@
         {
             "inputs": [
                 {
-                    "internalType": "uint32",
-                    "name": "companyId",
-                    "type": "uint32"
-                },
-                {
-                    "internalType": "uint16",
-                    "name": "lotId",
-                    "type": "uint16"
-                },
-                {
-                    "internalType": "string",
-                    "name": "activity",
-                    "type": "string"
-                }
-            ],
-            "name": "registerActivity",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
                     "internalType": "bytes32",
                     "name": "role",
                     "type": "bytes32"
@@ -985,7 +1007,6 @@
         "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
         "function OPERATOR_ROLE() view returns (bytes32)",
         "function OWNER_ROLE() view returns (bytes32)",
-        "function activityCount() view returns (uint32)",
         "function addCatalog(uint32 companyId, bytes32 name)",
         "function addCompany(bytes32 name, bool isManufacture, bool isIntermediate)",
         "function addLot(uint32 companyId, uint32[] productIds, uint32 quantity)",
@@ -999,21 +1020,21 @@
         "function disableCompany(uint32 companyId)",
         "function disableLot(uint32 companyId, uint32 lotId)",
         "function editCatalog(uint32 companyId, uint32 catalogId, bytes32 name)",
-        "function editCompany(tuple(uint32 companyId, bytes32 name, bool isManufacture, bool isIntermediate, bool active, uint32[] productCatalogIds) company)",
+        "function editCompany(tuple(uint32 companyId, bytes32 name, bool isManufacture, bool isIntermediate, bool active, uint32[] productCatalogIds, uint32[] lotIds) company)",
         "function editLot(uint32 companyId, uint32 lotId, uint32[] newProductIds, uint32 newQuantity)",
-        "function getCompany(uint32 companyId) view returns (tuple(uint32 companyId, bytes32 name, bool isManufacture, bool isIntermediate, bool active, uint32[] productCatalogIds))",
+        "function getCatalog(uint32 catalogId) view returns (tuple(uint32 catalogId, uint32 companyId, bytes32 productName, bool active, uint32[] productIds))",
+        "function getCompany(uint32 companyId) view returns (tuple(uint32 companyId, bytes32 name, bool isManufacture, bool isIntermediate, bool active, uint32[] productCatalogIds, uint32[] lotIds))",
+        "function getLot(uint32 lotId) view returns (tuple(uint32 lotId, uint32[] productIds, uint32 manufacturerId, uint32 quantity, bool confirmed, bool active))",
         "function getRoleAdmin(bytes32 role) view returns (bytes32)",
         "function grantOperatorRole(uint32 companyId, address account, address companyOwner)",
         "function grantRole(bytes32 role, address account)",
         "function hasRole(bytes32 role, address account) view returns (bool)",
-        "function lotActivities(uint32) view returns (uint32 activityId, uint32 lotId, string activity, address actor, uint256 started_at, bool finished, uint256 finished_at)",
         "function lotCount() view returns (uint32)",
         "function lots(uint32) view returns (uint32 lotId, uint32 manufacturerId, uint32 quantity, bool confirmed, bool active)",
         "function me(address _address) view returns (tuple(bool registered, address _address, uint32[] companyIds, uint32[] operatorIds))",
         "function productCount() view returns (uint32)",
         "function products(uint32) view returns (uint32 productId, uint32 catalogId, bool active)",
         "function register()",
-        "function registerActivity(uint32 companyId, uint16 lotId, string activity)",
         "function renounceRole(bytes32 role, address callerConfirmation)",
         "function revokeRole(bytes32 role, address account)",
         "function supportsInterface(bytes4 interfaceId) view returns (bool)",
@@ -1032,7 +1053,6 @@
         "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
         "function OPERATOR_ROLE() view returns (bytes32)",
         "function OWNER_ROLE() view returns (bytes32)",
-        "function activityCount() view returns (uint32)",
         "function addCatalog(uint32,bytes32)",
         "function addCompany(bytes32,bool,bool)",
         "function addLot(uint32,uint32[],uint32)",
@@ -1046,25 +1066,25 @@
         "function disableCompany(uint32)",
         "function disableLot(uint32,uint32)",
         "function editCatalog(uint32,uint32,bytes32)",
-        "function editCompany(tuple(uint32,bytes32,bool,bool,bool,uint32[]))",
+        "function editCompany(tuple(uint32,bytes32,bool,bool,bool,uint32[],uint32[]))",
         "function editLot(uint32,uint32,uint32[],uint32)",
-        "function getCompany(uint32) view returns (tuple(uint32,bytes32,bool,bool,bool,uint32[]))",
+        "function getCatalog(uint32) view returns (tuple(uint32,uint32,bytes32,bool,uint32[]))",
+        "function getCompany(uint32) view returns (tuple(uint32,bytes32,bool,bool,bool,uint32[],uint32[]))",
+        "function getLot(uint32) view returns (tuple(uint32,uint32[],uint32,uint32,bool,bool))",
         "function getRoleAdmin(bytes32) view returns (bytes32)",
         "function grantOperatorRole(uint32,address,address)",
         "function grantRole(bytes32,address)",
         "function hasRole(bytes32,address) view returns (bool)",
-        "function lotActivities(uint32) view returns (uint32,uint32,string,address,uint256,bool,uint256)",
         "function lotCount() view returns (uint32)",
         "function lots(uint32) view returns (uint32,uint32,uint32,bool,bool)",
         "function me(address) view returns (tuple(bool,address,uint32[],uint32[]))",
         "function productCount() view returns (uint32)",
         "function products(uint32) view returns (uint32,uint32,bool)",
         "function register()",
-        "function registerActivity(uint32,uint16,string)",
         "function renounceRole(bytes32,address)",
         "function revokeRole(bytes32,address)",
         "function supportsInterface(bytes4) view returns (bool)",
         "function users(address) view returns (bool,address)"
     ],
-    "address": "0x603677DCc87600ad98C927cd4F53262AaBfe159a"
+    "address": "0x8d902E8cef0789D72aaf61090B10522b347a5922"
 }

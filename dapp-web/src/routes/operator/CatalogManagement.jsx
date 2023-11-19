@@ -102,7 +102,7 @@ function useCompaniesFetcher() {
 }
 
 function CatalogManagementTable({ company }) {
-  useCatalogFetcher(company);
+  const { catalogData } = useCatalogFetcher(company);
   return (
     <Table>
       <thead>
@@ -110,7 +110,13 @@ function CatalogManagementTable({ company }) {
           <th>Nome</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        {catalogData?.map((catalog, i) => (
+          <tr key={i}>
+            <td>{catalog?.productName}</td>
+          </tr>
+        ))}
+      </tbody>
     </Table>
   );
 }
@@ -122,21 +128,27 @@ CatalogManagementTable.propTypes = {
 function useCatalogFetcher(company) {
   console.log({ company });
 
-  useContractInfiniteReads({
+  const { data } = useContractInfiniteReads({
     cacheKey: "catalogs",
     contracts() {
-      return company.catalogIds.map((catalog) => ({
+      return company.productCatalogIds.map((catalog) => ({
         address: contractInfo.address,
         abi: contractInfo.abi,
-        functionName: "catalogs",
+        functionName: "getCatalog",
         args: [catalog],
+        // enabled: Boolean(company.productCatalogIds.length > 0),
       }));
     },
     enabled: Boolean(company),
-  })
+  });
+
+  const catalogData = data?.pages[0]?.map(({ result: catalog }) => ({
+    ...catalog,
+    productName: hexToString(catalog?.productName, { size: 32 }),
+  }));
 
   return {
-    a: 1,
+    catalogData,
   };
 }
 
