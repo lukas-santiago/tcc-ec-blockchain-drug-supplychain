@@ -1,7 +1,21 @@
+import { useDebounce } from "@uidotdev/usehooks";
 import { PropTypes } from "prop-types";
 import React from "react";
-import { Alert, Button, ButtonGroup, Col, Form, FormSelect, Modal, Row, Spinner, Table } from "react-bootstrap";
-import { hexToString } from "viem";
+import {
+  Alert,
+  Button,
+  ButtonGroup,
+  Card,
+  Col,
+  Form,
+  FormSelect,
+  InputGroup,
+  Modal,
+  Row,
+  Spinner,
+  Table,
+} from "react-bootstrap";
+import { BaseError, ContractFunctionExecutionError, ContractFunctionRevertedError, hexToString } from "viem";
 import {
   useAccount,
   useContractInfiniteReads,
@@ -11,11 +25,11 @@ import {
   useWaitForTransaction,
 } from "wagmi";
 import contractInfo from "../../../contract-abis/contract-info.json";
-import { useDebounce } from "@uidotdev/usehooks";
 
 export function LotManagement() {
-  const { companiesRows } = useCompaniesFetcher();
+  const { companiesRows: rawCompaniesRows } = useCompaniesFetcher();
 
+  const companiesRows = rawCompaniesRows?.filter((company) => company?.isManufacture);
   const [selectedCompany, setSelectedCompany] = React.useState(null);
 
   console.log({ companiesRows });
@@ -166,7 +180,7 @@ function LotManagementTableRow({ lot, company }) {
             </Button>
           </ButtonGroup>
           {showEditModal && (
-            <LotModalForm show={showEditModal} handleClose={handleClose} company={company} defaultLot={lot} />
+            <LotEditModalForm show={showEditModal} handleClose={handleClose} company={company} defaultLot={lot} />
           )}
           {showConfirmModal && (
             <ConfirmLotModal show={showConfirmModal} close={handleCloseConfirm} company={company} lot={lot} />
@@ -223,7 +237,7 @@ function LotModalForm({ company, show, handleClose, defaultLot }) {
   if (defaultLot) {
     lotData = [company.companyId, defaultLot?.lotId, defaultLot.productIds, lotQuantity];
   } else {
-    lotData = [company.companyId, [], lotQuantity];
+    lotData = [company.companyId, lotQuantity];
   }
 
   const { config, error } = usePrepareContractWrite({
@@ -479,4 +493,256 @@ ConfirmLotModal.propTypes = {
   close: PropTypes.func.isRequired,
   company: PropTypes.object,
   lot: PropTypes.object,
+};
+
+function LotEditModalForm({ company, show, handleClose, defaultLot }) {
+  const [lotQuantity, setLotQuantity] = React.useState(defaultLot?.quantity || "");
+
+  const { data: rawLotProducts } = useContractRead({
+    address: contractInfo.address,
+    abi: contractInfo.abi,
+    functionName: "getLotProducts",
+    args: [defaultLot.lotId],
+  });
+
+  const { catalogData } = useCatalogFetcher(company);
+  const [catalogSelected, setCatalogSelected] = React.useState(catalogData[0]);
+
+  const lotProducts = rawLotProducts?.map((lotProduct) => ({
+    ...lotProduct,
+    productName: catalogData.find((catalog) => catalog.catalogId === lotProduct.catalogId)?.productName || "",
+  })) || [];
+
+  const [productList, setProductList] = React.useState(lotProducts || []);
+
+  let lotData = [company.companyId, defaultLot?.lotId, lotQuantity, productList];
+
+  const { config, error } = usePrepareContractWrite({
+    address: contractInfo.address,
+    abi: contractInfo.abi,
+    functionName: "editLot",
+    args: lotData,
+    enabled: productList.length > 0 && Boolean(lotQuantity),
+  });
+
+  const { data, write } = useContractWrite(config);
+
+  const { isLoading } = useWaitForTransaction({
+    hash: data?.hash,
+    onSuccess: () => {
+      handleClose();
+      window.location.reload();
+    },
+  });
+
+  const productQuantity = productList.reduce((acc, product) => acc + product.quantity, 0);
+  const disabled = productQuantity < lotQuantity || !write || isLoading;
+
+  console.log({
+    lotQuantity,
+    company,
+    defaultLot,
+    catalogData,
+    lotData,
+    productList,
+    catalogSelected,
+    lotProducts,
+    rawLotProducts,
+  });
+
+  const handleSelectedCatalog = (e) =>
+    setCatalogSelected(catalogData.find((catalog) => catalog.catalogId === Number(e.target.value)));
+
+  const addProduct = () => {
+    setProductList([
+      ...productList,
+      {
+        catalogId: catalogSelected.catalogId,
+        productName: catalogSelected.productName,
+        quantity: 1,
+      },
+    ]);
+  };
+
+  const disableAddProduct =
+    !catalogSelected || productList.some((product) => product.catalogId == catalogSelected.catalogId);
+
+  const increaseProductQuantity = (product) => {
+    setProductList(
+      productList.map((p) => (p.catalogId === product.catalogId ? { ...p, quantity: p.quantity + 1 } : p))
+    );
+  };
+
+  const decreaseProductQuantity = (product) => {
+    setProductList(
+      productList.map((p) => (p.catalogId === product.catalogId ? { ...p, quantity: p.quantity - 1 } : p))
+    );
+  };
+
+  const removeProduct = (product) => {
+    setProductList(productList.filter((p) => p.catalogId !== product.catalogId).map((p) => ({ ...p })));
+  };
+
+  const disableIncreaseProductQuantity = productQuantity >= Number(lotQuantity);
+
+  return (
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Criar Lote</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>Quantidade do Lote</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Quantidade do Lote"
+              value={lotQuantity}
+              onChange={(e) => setLotQuantity(e.target.value)}
+            />
+          </Form.Group>
+          <Card className="mt-4">
+            <Card.Header className="d-flex justify-content-between">
+              <span>Produtos</span>
+              <span>Total: {productQuantity}</span>
+            </Card.Header>
+            <Card.Body>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>Selecione o Catálogo</Form.Label>
+                <InputGroup>
+                  <Form.Select onChange={handleSelectedCatalog}>
+                    {catalogData?.map((catalog, i) => (
+                      <option key={i} value={catalog.catalogId}>
+                        {catalog.productName}
+                      </option>
+                    ))}
+                  </Form.Select>
+                  <Button onClick={addProduct} disabled={disableAddProduct}>
+                    Adicionar
+                  </Button>
+                </InputGroup>
+                <hr />
+                {productList.map((product, i) => (
+                  <div key={i} className="d-flex justify-content-between align-items-center mt-2">
+                    <span>
+                      <span>{product?.productName}</span>
+                      <Button size="sm" variant="danger" className="ms-2" onClick={() => removeProduct(product)}>
+                        ✕
+                      </Button>
+                    </span>
+                    <div className="d-flex justify-content-between align-items-center" style={{ gap: "0.5rem" }}>
+                      <Button
+                        size="sm"
+                        onClick={() => decreaseProductQuantity(product)}
+                        disabled={product?.quantity === 1}
+                      >
+                        −
+                      </Button>
+                      <span>{product?.quantity}</span>
+                      <Button
+                        size="sm"
+                        onClick={() => increaseProductQuantity(product)}
+                        disabled={disableIncreaseProductQuantity}
+                      >
+                        +
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </Form.Group>
+            </Card.Body>
+          </Card>
+        </Form>
+        {error && <ErrorHandler error={error} />}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Cancelar
+        </Button>
+        {!isLoading ? (
+          <Button
+            variant="primary"
+            onClick={() => {
+              write?.();
+            }}
+            disabled={disabled}
+          >
+            Salvar
+          </Button>
+        ) : (
+          <Button variant="primary" disabled>
+            <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
+            <span className="ms-2">Carregando...</span>
+          </Button>
+        )}
+      </Modal.Footer>
+    </Modal>
+  );
+}
+
+LotEditModalForm.propTypes = {
+  company: PropTypes.object,
+  show: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  defaultLot: PropTypes.object,
+};
+
+function useCatalogFetcher(company) {
+  console.log({ company });
+
+  const { data } = useContractInfiniteReads({
+    cacheKey: "catalogs",
+    contracts() {
+      return company.productCatalogIds.map((catalog) => ({
+        address: contractInfo.address,
+        abi: contractInfo.abi,
+        functionName: "getCatalog",
+        args: [catalog],
+        // enabled: Boolean(company.productCatalogIds.length > 0),
+      }));
+    },
+    enabled: Boolean(company),
+  });
+
+  const catalogData = data?.pages[0]?.map(({ result: catalog }) => ({
+    ...catalog,
+    productName: hexToString(catalog?.productName, { size: 32 }),
+  }));
+
+  return {
+    catalogData,
+  };
+}
+
+function ErrorHandler({ error }) {
+  let reason;
+
+  if (error instanceof BaseError) {
+    let errorInstance =
+      error.walk((error) => error instanceof ContractFunctionRevertedError) ||
+      error.walk((error) => error instanceof ContractFunctionExecutionError);
+
+    if (errorInstance) {
+      reason = error?.cause?.reason || error.shortMessage;
+      console.log({ reason });
+    }
+  }
+
+  return (
+    <>
+      <hr />
+      <Alert
+        style={{
+          wordWrap: "break-word",
+        }}
+        variant="danger"
+      >
+        {reason || error?.message?.split("Details: ")[1] || error?.message}
+      </Alert>
+    </>
+  );
+}
+
+ErrorHandler.propTypes = {
+  error: PropTypes.any,
 };

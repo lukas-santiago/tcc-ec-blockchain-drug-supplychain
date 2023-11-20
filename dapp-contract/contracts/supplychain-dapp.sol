@@ -159,7 +159,6 @@ contract SupplyChainDApp is SupplyChainDAppBase {
     uint32 companyId;
     bytes32 productName;
     bool active;
-    uint32[] productIds;
   }
 
   uint32 public catalogCount;
@@ -205,31 +204,22 @@ contract SupplyChainDApp is SupplyChainDAppBase {
   // TODO: Implementar a lógica da gestão de lote
   // Produto (Product)
   struct ProductModel {
-    uint32 productId;
     uint32 catalogId;
-    bool active;
+    uint32 quantity;
   }
 
-  uint32 public productCount;
-  mapping(uint32 => ProductModel) public products;
+  mapping(uint32 => ProductModel[]) public lotProducts;
 
-  function addProduct(
-    uint32 companyId,
-    uint32 catalogId
-  ) public onlyRole(OPERATOR_ROLE) isOperatorOfCompany(companyId) isManufactureCompany(companyId) {
-    productCount++;
-
-    products[productCount] = ProductModel(productCount, catalogId, true);
-
-    catalogs[catalogId].productIds.push(productCount);
+  function getLotProducts(uint32 lotId) public view returns (ProductModel[] memory) {
+    return lotProducts[lotId];
   }
 
   // Lote (Lot)
   struct LotModel {
     uint32 lotId;
-    uint32[] productIds;
     uint32 manufacturerId;
     uint32 quantity;
+    uint32 catalogCount;
     bool confirmed;
     bool active;
   }
@@ -243,21 +233,14 @@ contract SupplyChainDApp is SupplyChainDAppBase {
 
   function addLot(
     uint32 companyId,
-    uint32[] memory productIds,
     uint32 quantity
   ) public onlyRole(OPERATOR_ROLE) isOperatorOfCompany(companyId) isManufactureCompany(companyId) {
     lotCount++;
 
-    bool checked = true;
-    for (uint i = 0; i < productIds.length; i++) {
-      if (!products[productIds[i]].active) checked = false;
-    }
-    require(checked, "One or more products are not active.");
     require(quantity > 0, "Quantity must be greater than zero.");
 
     LotModel memory _lot;
     _lot.lotId = lotCount;
-    _lot.productIds = productIds;
     _lot.manufacturerId = companyId;
     _lot.quantity = quantity;
     _lot.confirmed = false;
@@ -271,8 +254,8 @@ contract SupplyChainDApp is SupplyChainDAppBase {
   function editLot(
     uint32 companyId,
     uint32 lotId,
-    uint32[] memory newProductIds,
-    uint32 newQuantity
+    uint32 newQuantity,
+    ProductModel[] memory newProducts
   )
     public
     onlyRole(OPERATOR_ROLE)
@@ -282,8 +265,23 @@ contract SupplyChainDApp is SupplyChainDAppBase {
     onlyUnconfirmedLot(lotId)
     onlyEnabledLot(lotId)
   {
-    lots[lotId].productIds = newProductIds;
+    require(newQuantity > 0, "Quantity must be greater than zero.");
+    require(newProducts.length < 100, "Quantity of product catalogs must be less than 100.");
+
+    uint counter;
+    for (uint i = 0; i < newProducts.length; i++) {
+      require(newProducts[i].quantity > 0, "Quantity of product must be greater than zero.");
+      counter += newProducts[i].quantity;
+    }
+    require(counter == newQuantity, "lot quantity must be equal to product quantity");
+
     lots[lotId].quantity = newQuantity;
+    lots[lotId].catalogCount = uint32(newProducts.length);
+
+    delete lotProducts[lotId];
+    for (uint i = 0; i < newProducts.length; i++) {
+      lotProducts[lotId].push(newProducts[i]);
+    }
   }
 
   function confirmLot(
@@ -297,7 +295,7 @@ contract SupplyChainDApp is SupplyChainDAppBase {
     onlyValidLot(lotId)
     onlyEnabledLot(lotId)
   {
-    require(lots[lotId].productIds.length == lots[lotId].quantity, "lot quantity must be equal to product quantity");
+    // require(lots[lotId].products.length == lots[lotId].quantity, "lot quantity must be equal to product quantity");
     lots[lotId].confirmed = true;
   }
 
@@ -331,15 +329,11 @@ contract SupplyChainDApp is SupplyChainDAppBase {
   }
   // TODO: Implementar a lógica da movimentação de lote
 
-  //   struct LotActivity {
-  //     uint32 activityId;
-  //     uint32 lotId;
-  //     string activity;
-  //     address actor;
-  //     uint256 started_at;
-  //     bool finished;
-  //     uint256 finished_at;
-  //   }
+  // struct LotActivity {
+  //   uint32 activityId;
+  //   uint32 lotId;
+  //   string activity;
+  // }
 
   //   uint32 public activityCount;
   //   mapping(uint32 => LotActivity) public lotActivities;

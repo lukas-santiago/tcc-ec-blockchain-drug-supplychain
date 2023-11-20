@@ -13,7 +13,9 @@ import {
 import contractInfo from "../../../contract-abis/contract-info.json";
 
 export function CatalogManagement() {
-  const { companiesRows } = useCompaniesFetcher();
+  const { companiesRows: rawCompaniesRows } = useCompaniesFetcher();
+
+  const companiesRows = rawCompaniesRows?.filter((company) => company?.isManufacture);
 
   const [selectedCompany, setSelectedCompany] = React.useState(null);
 
@@ -33,7 +35,7 @@ export function CatalogManagement() {
 
   return (
     <>
-      <h1>Catalog Management</h1>
+      <h1>Gerenciamento de Catálogos</h1>
       <Form>
         <Col md={3}>
           <Form.Label>Escolha uma empresa</Form.Label>
@@ -48,7 +50,7 @@ export function CatalogManagement() {
         <Row>
           <div className="d-flex justify-content-end">
             <Button variant="primary" onClick={handleShow}>
-              Criar Companhia
+              Criar Catálogo
             </Button>
             {show && <CatalogModalForm company={selectedCompany} show={show} handleClose={handleClose} />}
           </div>
