@@ -474,7 +474,7 @@
                             "type": "uint32[]"
                         }
                     ],
-                    "internalType": "struct SupplyChainDApp.CompanyModel",
+                    "internalType": "struct Models.Company",
                     "name": "company",
                     "type": "tuple"
                 }
@@ -514,7 +514,7 @@
                             "type": "uint32"
                         }
                     ],
-                    "internalType": "struct SupplyChainDApp.ProductModel[]",
+                    "internalType": "struct Models.Product[]",
                     "name": "newProducts",
                     "type": "tuple[]"
                 }
@@ -557,7 +557,7 @@
                             "type": "bool"
                         }
                     ],
-                    "internalType": "struct SupplyChainDApp.CatalogModel",
+                    "internalType": "struct Models.Catalog",
                     "name": "",
                     "type": "tuple"
                 }
@@ -613,7 +613,7 @@
                             "type": "uint32[]"
                         }
                     ],
-                    "internalType": "struct SupplyChainDApp.CompanyModel",
+                    "internalType": "struct Models.Company",
                     "name": "",
                     "type": "tuple"
                 }
@@ -664,7 +664,7 @@
                             "type": "bool"
                         }
                     ],
-                    "internalType": "struct SupplyChainDApp.LotModel",
+                    "internalType": "struct Models.Lot",
                     "name": "",
                     "type": "tuple"
                 }
@@ -695,7 +695,7 @@
                             "type": "uint32"
                         }
                     ],
-                    "internalType": "struct SupplyChainDApp.ProductModel[]",
+                    "internalType": "struct Models.Product[]",
                     "name": "",
                     "type": "tuple[]"
                 }
@@ -717,6 +717,47 @@
                     "internalType": "bytes32",
                     "name": "",
                     "type": "bytes32"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "_address",
+                    "type": "address"
+                }
+            ],
+            "name": "getUser",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "bool",
+                            "name": "registered",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "_address",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint32[]",
+                            "name": "companyIds",
+                            "type": "uint32[]"
+                        },
+                        {
+                            "internalType": "uint32[]",
+                            "name": "operatorIds",
+                            "type": "uint32[]"
+                        }
+                    ],
+                    "internalType": "struct Models.User",
+                    "name": "",
+                    "type": "tuple"
                 }
             ],
             "stateMutability": "view",
@@ -874,47 +915,6 @@
             "type": "function"
         },
         {
-            "inputs": [
-                {
-                    "internalType": "address",
-                    "name": "_address",
-                    "type": "address"
-                }
-            ],
-            "name": "me",
-            "outputs": [
-                {
-                    "components": [
-                        {
-                            "internalType": "bool",
-                            "name": "registered",
-                            "type": "bool"
-                        },
-                        {
-                            "internalType": "address",
-                            "name": "_address",
-                            "type": "address"
-                        },
-                        {
-                            "internalType": "uint32[]",
-                            "name": "companyIds",
-                            "type": "uint32[]"
-                        },
-                        {
-                            "internalType": "uint32[]",
-                            "name": "operatorIds",
-                            "type": "uint32[]"
-                        }
-                    ],
-                    "internalType": "struct SupplyChainDApp.UserModel",
-                    "name": "",
-                    "type": "tuple"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
             "inputs": [],
             "name": "register",
             "outputs": [],
@@ -1033,13 +1033,13 @@
         "function getLot(uint32 lotId) view returns (tuple(uint32 lotId, uint32 manufacturerId, uint32 quantity, uint32 catalogCount, bool confirmed, bool active))",
         "function getLotProducts(uint32 lotId) view returns (tuple(uint32 catalogId, uint32 quantity)[])",
         "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+        "function getUser(address _address) view returns (tuple(bool registered, address _address, uint32[] companyIds, uint32[] operatorIds))",
         "function grantOperatorRole(uint32 companyId, address account, address companyOwner)",
         "function grantRole(bytes32 role, address account)",
         "function hasRole(bytes32 role, address account) view returns (bool)",
         "function lotCount() view returns (uint32)",
         "function lotProducts(uint32, uint256) view returns (uint32 catalogId, uint32 quantity)",
         "function lots(uint32) view returns (uint32 lotId, uint32 manufacturerId, uint32 quantity, uint32 catalogCount, bool confirmed, bool active)",
-        "function me(address _address) view returns (tuple(bool registered, address _address, uint32[] companyIds, uint32[] operatorIds))",
         "function register()",
         "function renounceRole(bytes32 role, address callerConfirmation)",
         "function revokeRole(bytes32 role, address account)",
@@ -1078,18 +1078,18 @@
         "function getLot(uint32) view returns (tuple(uint32,uint32,uint32,uint32,bool,bool))",
         "function getLotProducts(uint32) view returns (tuple(uint32,uint32)[])",
         "function getRoleAdmin(bytes32) view returns (bytes32)",
+        "function getUser(address) view returns (tuple(bool,address,uint32[],uint32[]))",
         "function grantOperatorRole(uint32,address,address)",
         "function grantRole(bytes32,address)",
         "function hasRole(bytes32,address) view returns (bool)",
         "function lotCount() view returns (uint32)",
         "function lotProducts(uint32,uint256) view returns (uint32,uint32)",
         "function lots(uint32) view returns (uint32,uint32,uint32,uint32,bool,bool)",
-        "function me(address) view returns (tuple(bool,address,uint32[],uint32[]))",
         "function register()",
         "function renounceRole(bytes32,address)",
         "function revokeRole(bytes32,address)",
         "function supportsInterface(bytes4) view returns (bool)",
         "function users(address) view returns (bool,address)"
     ],
-    "address": "0x9Bf6AC21aE6c8F796499358daB0e14AeC24eAa00"
+    "address": "0x60AF19508EfFaB52eA2C1279724591A9b6b79713"
 }

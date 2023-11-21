@@ -33,22 +33,17 @@ contract SupplyChainDApp is SupplyChainDAppBase {
   using ArrayTools for uint32[];
 
   // User
-  struct UserModel {
-    bool registered;
-    address _address;
-    uint32[] companyIds;
-    uint32[] operatorIds;
-  }
-  mapping(address => UserModel) public users;
 
-  function me(address _address) public view returns (UserModel memory) {
+  mapping(address => Models.User) public users;
+
+  function getUser(address _address) external view returns (Models.User memory) {
     return users[_address];
   }
 
   event UserRegistered(address indexed user);
 
   function register() public {
-    UserModel storage user = users[msg.sender];
+    Models.User storage user = users[msg.sender];
     require(user.registered == false, "User is already registered.");
     user.registered = true;
     user._address = msg.sender;
@@ -61,11 +56,11 @@ contract SupplyChainDApp is SupplyChainDAppBase {
   }
 
   function grantOperatorRole(uint32 companyId, address account, address companyOwner) public onlyRole(COMPANY_ROLE) {
-    UserModel storage userOperator = users[account];
+    Models.User storage userOperator = users[account];
     require(userOperator.registered == true, "User is not registered.");
 
     require(companyId != 0, "Invalid company id.");
-    UserModel storage userCompanyOwner = users[companyOwner];
+    Models.User storage userCompanyOwner = users[companyOwner];
 
     require(userCompanyOwner.companyIds.includes(companyId), "Company's owner is another.");
     require(userOperator.operatorIds.includes(companyId) == false, "User is already an operator.");
@@ -76,28 +71,20 @@ contract SupplyChainDApp is SupplyChainDAppBase {
   }
 
   // Company
-  struct CompanyModel {
-    uint32 companyId;
-    bytes32 name;
-    bool isManufacture;
-    bool isIntermediate;
-    bool active;
-    uint32[] productCatalogIds;
-    uint32[] lotIds;
-  }
+
   uint32 public companiesCount;
-  mapping(uint32 => CompanyModel) public companies;
+  mapping(uint32 => Models.Company) public companies;
 
   event CompanyRegistered(uint32 companyId, address indexed account);
 
-  function getCompany(uint32 companyId) public view returns (CompanyModel memory) {
+  function getCompany(uint32 companyId) public view returns (Models.Company memory) {
     return companies[companyId];
   }
 
   function addCompany(bytes32 name, bool isManufacture, bool isIntermediate) public onlyRole(COMPANY_ROLE) {
     companiesCount++;
 
-    CompanyModel memory _company;
+    Models.Company memory _company;
     _company.companyId = companiesCount;
     _company.name = name;
     _company.isManufacture = isManufacture;
@@ -111,7 +98,9 @@ contract SupplyChainDApp is SupplyChainDAppBase {
     emit CompanyRegistered(companiesCount, msg.sender);
   }
 
-  function editCompany(CompanyModel memory company) public onlyRole(COMPANY_ROLE) isCompanyOwner(company.companyId) {
+  function editCompany(
+    Models.Company calldata company
+  ) public onlyRole(COMPANY_ROLE) isCompanyOwner(company.companyId) {
     companies[company.companyId].name = company.name;
     companies[company.companyId].isManufacture = company.isManufacture;
     companies[company.companyId].isIntermediate = company.isIntermediate;
@@ -122,7 +111,7 @@ contract SupplyChainDApp is SupplyChainDAppBase {
   }
 
   modifier isCompanyOwner(uint32 companyId) {
-    UserModel storage user = users[msg.sender];
+    Models.User storage user = users[msg.sender];
     bool checked = false;
     for (uint i = 0; i < user.companyIds.length; i++) {
       if (user.companyIds[i] == companyId) {
@@ -134,7 +123,7 @@ contract SupplyChainDApp is SupplyChainDAppBase {
   }
 
   modifier isOperatorOfCompany(uint32 companyId) {
-    UserModel storage user = users[msg.sender];
+    Models.User storage user = users[msg.sender];
     bool checked = false;
     for (uint i = 0; i < user.operatorIds.length; i++) if (user.operatorIds[i] == companyId) checked = true;
     require(checked, "User is not an operator of this company.");
@@ -142,29 +131,23 @@ contract SupplyChainDApp is SupplyChainDAppBase {
   }
 
   modifier isManufactureCompany(uint32 companyId) {
-    CompanyModel memory company = companies[companyId];
+    Models.Company memory company = companies[companyId];
     require(company.isManufacture, "Company is not a manufacture company.");
     _;
   }
 
   modifier isIntermediateCompany(uint32 companyId) {
-    CompanyModel memory company = companies[companyId];
+    Models.Company memory company = companies[companyId];
     require(company.isIntermediate, "Company is not an intermediate company.");
     _;
   }
 
   // Catalogo
-  struct CatalogModel {
-    uint32 catalogId;
-    uint32 companyId;
-    bytes32 productName;
-    bool active;
-  }
 
   uint32 public catalogCount;
-  mapping(uint32 => CatalogModel) public catalogs;
+  mapping(uint32 => Models.Catalog) public catalogs;
 
-  function getCatalog(uint32 catalogId) public view returns (CatalogModel memory) {
+  function getCatalog(uint32 catalogId) public view returns (Models.Catalog memory) {
     return catalogs[catalogId];
   }
 
@@ -174,7 +157,7 @@ contract SupplyChainDApp is SupplyChainDAppBase {
   ) public onlyRole(OPERATOR_ROLE) isOperatorOfCompany(companyId) isManufactureCompany(companyId) {
     catalogCount++;
 
-    CatalogModel memory _catalog;
+    Models.Catalog memory _catalog;
     _catalog.catalogId = catalogCount;
     _catalog.companyId = companyId;
     _catalog.productName = name;
@@ -203,31 +186,19 @@ contract SupplyChainDApp is SupplyChainDAppBase {
 
   // TODO: Implementar a lógica da gestão de lote
   // Produto (Product)
-  struct ProductModel {
-    uint32 catalogId;
-    uint32 quantity;
-  }
 
-  mapping(uint32 => ProductModel[]) public lotProducts;
+  mapping(uint32 => Models.Product[]) public lotProducts;
 
-  function getLotProducts(uint32 lotId) public view returns (ProductModel[] memory) {
+  function getLotProducts(uint32 lotId) public view returns (Models.Product[] memory) {
     return lotProducts[lotId];
   }
 
   // Lote (Lot)
-  struct LotModel {
-    uint32 lotId;
-    uint32 manufacturerId;
-    uint32 quantity;
-    uint32 catalogCount;
-    bool confirmed;
-    bool active;
-  }
 
   uint32 public lotCount;
-  mapping(uint32 => LotModel) public lots;
+  mapping(uint32 => Models.Lot) public lots;
 
-  function getLot(uint32 lotId) public view returns (LotModel memory) {
+  function getLot(uint32 lotId) public view returns (Models.Lot memory) {
     return lots[lotId];
   }
 
@@ -239,7 +210,7 @@ contract SupplyChainDApp is SupplyChainDAppBase {
 
     require(quantity > 0, "Quantity must be greater than zero.");
 
-    LotModel memory _lot;
+    Models.Lot memory _lot;
     _lot.lotId = lotCount;
     _lot.manufacturerId = companyId;
     _lot.quantity = quantity;
@@ -255,7 +226,7 @@ contract SupplyChainDApp is SupplyChainDAppBase {
     uint32 companyId,
     uint32 lotId,
     uint32 newQuantity,
-    ProductModel[] memory newProducts
+    Models.Product[] memory newProducts
   )
     public
     onlyRole(OPERATOR_ROLE)
@@ -327,24 +298,155 @@ contract SupplyChainDApp is SupplyChainDAppBase {
     require(lots[lotId].active, "lot is disabled");
     _;
   }
-  // TODO: Implementar a lógica da movimentação de lote
+}
 
-  // struct LotActivity {
-  //   uint32 activityId;
-  //   uint32 lotId;
-  //   string activity;
-  // }
+contract SupplyChainDappPart2 {
+  bytes32 public constant OWNER_ROLE = bytes32("OWNER");
+  bytes32 public constant COMPANY_ROLE = bytes32("COMPANY");
+  bytes32 public constant OPERATOR_ROLE = bytes32("OPERATOR");
+  SupplyChainDApp public supplyChainDApp;
 
-  //   uint32 public activityCount;
-  //   mapping(uint32 => LotActivity) public lotActivities;
+  constructor(address _supplyChainDAppAddress) {
+    supplyChainDApp = SupplyChainDApp(_supplyChainDAppAddress);
+  }
 
-  //   function registerActivity(
-  //     uint32 companyId,
-  //     uint16 lotId,
-  //     string memory activity
-  //   ) public onlyRole(OPERATOR_ROLE) isOperatorOfCompany(companyId) isIntermediateCompany(companyId) onlyValidLot(lotId) {
-  //     activityCount++;
-  //     lotActivities[activityCount] = LotActivity(activityCount, lotId, activity, msg.sender, block.timestamp, false, 0);
-  //   }
-  // TODO: Implementar a lógica do rastro de atividade
+  uint32 public activityCount;
+  mapping(uint32 => Models.LotActivity[]) public lotActivities;
+
+  function registerActivity(
+    uint32 companyId,
+    uint32 lotId,
+    string memory activity
+  ) public onlyRole(OPERATOR_ROLE) isOperatorOfCompany(companyId) isIntermediateCompany(companyId) onlyValidLot(lotId) {
+    activityCount++;
+    lotActivities[activityCount].push(
+      Models.LotActivity(activityCount, lotId, activity, msg.sender, block.timestamp, false, 0)
+    );
+  }
+
+  function getLotActivities(uint32 lotId) public view returns (Models.LotActivity[] memory) {
+    return lotActivities[lotId];
+  }
+
+  function fn_isOperatorOfCompany(uint32 companyId) internal view returns (bool) {
+    try supplyChainDApp.getUser(msg.sender) returns (Models.User memory user) {
+      bool checked = false;
+      for (uint i = 0; i < user.operatorIds.length; i++) if (user.operatorIds[i] == companyId) checked = true;
+      return checked;
+    } catch {
+      revert("External call failed. User not found.");
+    }
+  }
+
+  function fn_isIntermediateCompany(uint32 companyId) internal view returns (bool) {
+    try supplyChainDApp.getCompany(companyId) returns (Models.Company memory company) {
+      return company.isIntermediate;
+    } catch {
+      revert("External call failed. Company not found.");
+    }
+  }
+
+  function fn_onlyValidLot(uint32 lotId) internal view returns (bool) {
+    try supplyChainDApp.getLot(lotId) returns (Models.Lot memory lot) {
+      return lot.lotId > 0 && lot.lotId <= supplyChainDApp.lotCount();
+    } catch {
+      revert("External call failed. Lot not found.");
+    }
+  }
+
+  function fn_onlyRole(bytes32 role) internal view returns (bool) {
+    try supplyChainDApp.hasRole(role, msg.sender) returns (bool hasRole) {
+      return hasRole;
+    } catch {
+      revert("External call failed. User not found.");
+    }
+  }
+
+  modifier onlyRole(bytes32 role) {
+    require(fn_onlyRole(role), "User does not have the required role.");
+    _;
+  }
+
+  modifier isOperatorOfCompany(uint32 companyId) {
+    require(fn_isOperatorOfCompany(companyId), "User is not an operator of this company.");
+    _;
+  }
+
+  modifier isIntermediateCompany(uint32 companyId) {
+    require(fn_isIntermediateCompany(companyId), "User is not an intermediate company.");
+    _;
+  }
+
+  modifier onlyValidLot(uint32 lotId) {
+    require(fn_onlyValidLot(lotId), "Lot not found.");
+    _;
+  }
+
+  function getUser(address _address) public view returns (Models.User memory) {
+    try supplyChainDApp.getUser(_address) returns (Models.User memory _user) {
+      return _user;
+    } catch {
+      revert("External call failed. User not found.");
+    }
+  }
+
+  function checkTraceability(
+    uint32 companyId,
+    uint32 lotId
+  )
+    public
+    view
+    returns (Models.Company memory, Models.Lot memory, Models.Product[] memory, Models.LotActivity[] memory)
+  {
+    Models.Company memory company = supplyChainDApp.getCompany(companyId);
+    Models.Lot memory lot = supplyChainDApp.getLot(lotId);
+    Models.Product[] memory products = supplyChainDApp.getLotProducts(lotId);
+    Models.LotActivity[] memory activities = getLotActivities(lotId);
+    return (company, lot, products, activities);
+  }
+}
+
+interface Models {
+  struct User {
+    bool registered;
+    address _address;
+    uint32[] companyIds;
+    uint32[] operatorIds;
+  }
+  struct Company {
+    uint32 companyId;
+    bytes32 name;
+    bool isManufacture;
+    bool isIntermediate;
+    bool active;
+    uint32[] productCatalogIds;
+    uint32[] lotIds;
+  }
+  struct Catalog {
+    uint32 catalogId;
+    uint32 companyId;
+    bytes32 productName;
+    bool active;
+  }
+  struct Product {
+    uint32 catalogId;
+    uint32 quantity;
+  }
+  struct Lot {
+    uint32 lotId;
+    uint32 manufacturerId;
+    uint32 quantity;
+    uint32 catalogCount;
+    bool confirmed;
+    bool active;
+  }
+  struct LotActivity {
+    uint32 activityId;
+    uint32 lotId;
+    string activity;
+    address actor;
+    uint256 started_at;
+    bool finished;
+    uint256 finished_at;
+  }
 }

@@ -26,7 +26,7 @@ export function CompanyManagement() {
   useContractRead({
     address: contractInfo.address,
     abi: contractInfo.abi,
-    functionName: "me",
+    functionName: "getUser",
     args: [address],
     onSuccess: (data) => setUser(data),
   });

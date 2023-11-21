@@ -12,6 +12,7 @@ import { CatalogManagement } from "./routes/operator/CatalogManagement";
 import { useAccount } from "wagmi";
 import { useRoleData } from "./hooks/useRoleData";
 import { LotManagement } from "./routes/operator/LotManagement";
+import { MovementManagement } from "./routes/operator/MovementManagement";
 
 function App() {
   return (
@@ -36,7 +37,8 @@ function RouteConfig() {
         {roles.OPERATOR === true && (
           <>
             <Route path="operator/catalog" element={<CatalogManagement />} />
-            <Route path="operator/lot" element={<LotManagement />} /> 
+            <Route path="operator/lot" element={<LotManagement />} />
+            <Route path="operator/movement" element={<MovementManagement />} />
           </>
         )}
         <Route path="*" element={<NoMatch />} />

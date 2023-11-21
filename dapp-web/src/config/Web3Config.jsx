@@ -25,6 +25,7 @@ import { stringToHex } from "viem";
 import contractInfo from "../../contract-abis/contract-info.json";
 import { ElevateOperatorModal } from "../routes/company/ElevateOperatorModal";
 import { useRoleData } from "../hooks/useRoleData";
+import { Link } from "react-router-dom";
 
 // 1. Get projectId
 const projectId = "9ef7f1e1ff7dec0aba278a7ba1f4171b";
@@ -74,7 +75,7 @@ export default function ConnectButton() {
   const { isConnected } = useAccount();
 
   return (
-    <div className="bg-dark d-flex align-items-center text-light gap-4 ps-3 pe-3 rounded">
+    <div className="bg-dark d-flex align-items-center text-light gap-2 ps-3 pe-3 rounded">
       {isConnected && (
         <>
           <Button
@@ -237,7 +238,7 @@ function UserActions() {
   const handleShow2 = () => setShow2(true);
 
   return (
-    <DropdownButton title="Registrado" variant="primary">
+    <DropdownButton title="Registrado" variant="outline-light" size="sm">
       {roles.OWNER === true && (
         <>
           <Dropdown.ItemText>Administrador</Dropdown.ItemText>
@@ -250,7 +251,7 @@ function UserActions() {
       {roles.COMPANY === true && (
         <>
           <Dropdown.ItemText>Gestor</Dropdown.ItemText>
-          <Dropdown.Item className="ps-4" href="/company/manage">
+          <Dropdown.Item className="ps-4" as={Link} to="/company/manage">
             <span>Companhia</span>
           </Dropdown.Item>
           <Dropdown.Item className="ps-4" onClick={handleShow2}>
@@ -262,11 +263,14 @@ function UserActions() {
       {roles.OPERATOR === true && (
         <>
           <Dropdown.ItemText>Operador</Dropdown.ItemText>
-          <Dropdown.Item className="ps-4" href="/operator/catalog">
+          <Dropdown.Item className="ps-4" as={Link} to="/operator/catalog">
             <span>Gerenciar Catálogo</span>
           </Dropdown.Item>
-          <Dropdown.Item className="ps-4" href="/operator/lot">
+          <Dropdown.Item className="ps-4" as={Link} to="/operator/lot">
             <span>Gerenciar Lote</span>
+          </Dropdown.Item>
+          <Dropdown.Item className="ps-4" as={Link} to="/operator/movement">
+            <span>Gerenciar Movimentação</span>
           </Dropdown.Item>
         </>
       )}

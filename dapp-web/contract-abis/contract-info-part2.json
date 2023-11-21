@@ -1,0 +1,439 @@
+{
+    "contractName": "SupplyChainDappPart2",
+    "abi": [
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "_supplyChainDAppAddress",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "inputs": [],
+            "name": "COMPANY_ROLE",
+            "outputs": [
+                {
+                    "internalType": "bytes32",
+                    "name": "",
+                    "type": "bytes32"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "OPERATOR_ROLE",
+            "outputs": [
+                {
+                    "internalType": "bytes32",
+                    "name": "",
+                    "type": "bytes32"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "OWNER_ROLE",
+            "outputs": [
+                {
+                    "internalType": "bytes32",
+                    "name": "",
+                    "type": "bytes32"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "activityCount",
+            "outputs": [
+                {
+                    "internalType": "uint32",
+                    "name": "",
+                    "type": "uint32"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint32",
+                    "name": "companyId",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "uint32",
+                    "name": "lotId",
+                    "type": "uint32"
+                }
+            ],
+            "name": "checkTraceability",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "uint32",
+                            "name": "companyId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "isManufacture",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "isIntermediate",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "uint32[]",
+                            "name": "productCatalogIds",
+                            "type": "uint32[]"
+                        },
+                        {
+                            "internalType": "uint32[]",
+                            "name": "lotIds",
+                            "type": "uint32[]"
+                        }
+                    ],
+                    "internalType": "struct Models.Company",
+                    "name": "",
+                    "type": "tuple"
+                },
+                {
+                    "components": [
+                        {
+                            "internalType": "uint32",
+                            "name": "lotId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "manufacturerId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "quantity",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "catalogCount",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "confirmed",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        }
+                    ],
+                    "internalType": "struct Models.Lot",
+                    "name": "",
+                    "type": "tuple"
+                },
+                {
+                    "components": [
+                        {
+                            "internalType": "uint32",
+                            "name": "catalogId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "quantity",
+                            "type": "uint32"
+                        }
+                    ],
+                    "internalType": "struct Models.Product[]",
+                    "name": "",
+                    "type": "tuple[]"
+                },
+                {
+                    "components": [
+                        {
+                            "internalType": "uint32",
+                            "name": "activityId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "lotId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "activity",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "actor",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "started_at",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "finished",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "finished_at",
+                            "type": "uint256"
+                        }
+                    ],
+                    "internalType": "struct Models.LotActivity[]",
+                    "name": "",
+                    "type": "tuple[]"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint32",
+                    "name": "lotId",
+                    "type": "uint32"
+                }
+            ],
+            "name": "getLotActivities",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "uint32",
+                            "name": "activityId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "lotId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "activity",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "actor",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "started_at",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "finished",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "finished_at",
+                            "type": "uint256"
+                        }
+                    ],
+                    "internalType": "struct Models.LotActivity[]",
+                    "name": "",
+                    "type": "tuple[]"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "_address",
+                    "type": "address"
+                }
+            ],
+            "name": "getUser",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "bool",
+                            "name": "registered",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "_address",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint32[]",
+                            "name": "companyIds",
+                            "type": "uint32[]"
+                        },
+                        {
+                            "internalType": "uint32[]",
+                            "name": "operatorIds",
+                            "type": "uint32[]"
+                        }
+                    ],
+                    "internalType": "struct Models.User",
+                    "name": "",
+                    "type": "tuple"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint32",
+                    "name": "",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "name": "lotActivities",
+            "outputs": [
+                {
+                    "internalType": "uint32",
+                    "name": "activityId",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "uint32",
+                    "name": "lotId",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "string",
+                    "name": "activity",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "actor",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "started_at",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "finished",
+                    "type": "bool"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "finished_at",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint32",
+                    "name": "companyId",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "uint32",
+                    "name": "lotId",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "string",
+                    "name": "activity",
+                    "type": "string"
+                }
+            ],
+            "name": "registerActivity",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "supplyChainDApp",
+            "outputs": [
+                {
+                    "internalType": "contract SupplyChainDApp",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ],
+    "humanReadableAbi": [
+        "constructor(address _supplyChainDAppAddress) nonpayable",
+        "function COMPANY_ROLE() view returns (bytes32)",
+        "function OPERATOR_ROLE() view returns (bytes32)",
+        "function OWNER_ROLE() view returns (bytes32)",
+        "function activityCount() view returns (uint32)",
+        "function checkTraceability(uint32 companyId, uint32 lotId) view returns (tuple(uint32 companyId, bytes32 name, bool isManufacture, bool isIntermediate, bool active, uint32[] productCatalogIds, uint32[] lotIds), tuple(uint32 lotId, uint32 manufacturerId, uint32 quantity, uint32 catalogCount, bool confirmed, bool active), tuple(uint32 catalogId, uint32 quantity)[], tuple(uint32 activityId, uint32 lotId, string activity, address actor, uint256 started_at, bool finished, uint256 finished_at)[])",
+        "function getLotActivities(uint32 lotId) view returns (tuple(uint32 activityId, uint32 lotId, string activity, address actor, uint256 started_at, bool finished, uint256 finished_at)[])",
+        "function getUser(address _address) view returns (tuple(bool registered, address _address, uint32[] companyIds, uint32[] operatorIds))",
+        "function lotActivities(uint32, uint256) view returns (uint32 activityId, uint32 lotId, string activity, address actor, uint256 started_at, bool finished, uint256 finished_at)",
+        "function registerActivity(uint32 companyId, uint32 lotId, string activity)",
+        "function supplyChainDApp() view returns (address)"
+    ],
+    "humanReadableAbiMinified": [
+        "constructor(address) nonpayable",
+        "function COMPANY_ROLE() view returns (bytes32)",
+        "function OPERATOR_ROLE() view returns (bytes32)",
+        "function OWNER_ROLE() view returns (bytes32)",
+        "function activityCount() view returns (uint32)",
+        "function checkTraceability(uint32,uint32) view returns (tuple(uint32,bytes32,bool,bool,bool,uint32[],uint32[]),tuple(uint32,uint32,uint32,uint32,bool,bool),tuple(uint32,uint32)[],tuple(uint32,uint32,string,address,uint256,bool,uint256)[])",
+        "function getLotActivities(uint32) view returns (tuple(uint32,uint32,string,address,uint256,bool,uint256)[])",
+        "function getUser(address) view returns (tuple(bool,address,uint32[],uint32[]))",
+        "function lotActivities(uint32,uint256) view returns (uint32,uint32,string,address,uint256,bool,uint256)",
+        "function registerActivity(uint32,uint32,string)",
+        "function supplyChainDApp() view returns (address)"
+    ],
+    "address": "0xBe7f7d1Fa18DD3B3D67187DC0f4848eb2E532237"
+}

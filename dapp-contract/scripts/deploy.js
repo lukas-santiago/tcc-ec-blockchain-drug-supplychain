@@ -8,12 +8,42 @@ async function main() {
 
   const deploymentInfo = await getDeploymentInfo(contract);
 
+  const contractPart2 = await ethers.deployContract("SupplyChainDappPart2", [deploymentInfo.address]);
+  await contractPart2.waitForDeployment();
+
+  const deploymentInfoPart2 = await getDeploymentInfo(contractPart2);
+
   console.log({
     contractName: deploymentInfo.contractName,
     address: deploymentInfo.address,
     owner: deploymentInfo.owner,
   });
+
+  console.log("\n", {
+    contractName: deploymentInfoPart2.contractName,
+    address: deploymentInfoPart2.address,
+    owner: deploymentInfoPart2.owner,
+  });
+
   saveToFile(deploymentInfo);
+
+  await fs.writeFile(
+    path.resolve("../dapp-web/contract-abis/contract-info-part2.json"),
+    JSON.stringify(
+      {
+        contractName: deploymentInfoPart2.contractName,
+        abi: deploymentInfoPart2.abi.full,
+        humanReadableAbi: deploymentInfoPart2.abi.humanReadableAbi,
+        humanReadableAbiMinified: deploymentInfoPart2.abi.humanReadableAbiMinified,
+        address: deploymentInfoPart2.address,
+      },
+      null,
+      4
+    ),
+    {
+      encoding: "utf-8",
+    }
+  );
 }
 
 main().catch((error) => {

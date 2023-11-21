@@ -1,0 +1,52 @@
+import { expect } from "chai";
+import { ethers } from "hardhat";
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+
+import { SupplyChainDApp__factory, SupplyChainDappPart2__factory } from "../types";
+
+export function encodeBytesNString(text: string, nBytes: number): string {
+  const bytes = ethers.toUtf8Bytes(text);
+  if (bytes.length > nBytes - 1) {
+    throw new Error("bytes" + nBytes + " string must be less than " + nBytes + " bytes");
+  }
+  return ethers.zeroPadBytes(bytes, nBytes);
+}
+
+async function deployContractFixture(middlewares: any = []) {
+  const wallets = await ethers.getSigners();
+  const owner = wallets[0];
+  const dAppCotract = await new SupplyChainDApp__factory(owner).deploy();
+
+  const dAppCotractPart2 = await new SupplyChainDappPart2__factory(owner).deploy(await dAppCotract.getAddress());
+
+  for await (const middleware of middlewares) {
+    if (typeof middleware === "function") {
+      await middleware(dAppCotract, owner, dAppCotractPart2);
+    }
+  }
+  return {
+    dAppCotract,
+    dAppCotractPart2,
+    owner,
+    wallets,
+  };
+}
+
+describe("SupplyChainDApp", async function () {
+  let fixturePromise = loadFixture(deployContractFixture);
+
+  describe("User", async function () {
+    it("register user", async function () {
+      const { dAppCotract, owner, dAppCotractPart2, wallets } = await fixturePromise;
+
+      await dAppCotract.register({ from: await owner.getAddress() });
+      await dAppCotract.register({ from: await wallets[1].getAddress() });
+      await dAppCotract.register({ from: await wallets[2].getAddress() });
+
+      await dAppCotract.grantRole([await dAppCotract.COMPANY_ROLE(), await wallets[1].getAddress()], {
+        from: await owner.getAddress(),
+      });
+      // expect().deep.equal(Object.values(model));
+    });
+  });
+});

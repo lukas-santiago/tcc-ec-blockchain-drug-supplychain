@@ -5,6 +5,8 @@ import "@nomicfoundation/hardhat-chai-matchers";
 import "@nomicfoundation/hardhat-network-helpers";
 import "@nomiclabs/hardhat-etherscan";
 import "hardhat-contract-sizer";
+import "hardhat-gas-reporter"
+
 
 /** @type import('hardhat/config').HardhatUserConfig */
 export default {
