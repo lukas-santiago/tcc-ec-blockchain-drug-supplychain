@@ -6,12 +6,12 @@ async function main() {
   const contract = await ethers.deployContract("SupplyChainDApp");
   await contract.waitForDeployment();
 
-  const deploymentInfo = await getDeploymentInfo(contract);
+  const deploymentInfo = await getDeploymentInfo(contract, "SupplyChainDApp");
 
   const contractPart2 = await ethers.deployContract("SupplyChainDappPart2", [deploymentInfo.address]);
   await contractPart2.waitForDeployment();
 
-  const deploymentInfoPart2 = await getDeploymentInfo(contractPart2);
+  const deploymentInfoPart2 = await getDeploymentInfo(contractPart2, "SupplyChainDappPart2");
 
   console.log({
     contractName: deploymentInfo.contractName,
@@ -51,8 +51,8 @@ main().catch((error) => {
   process.exitCode = 1;
 });
 
-async function getDeploymentInfo(contract) {
-  const artifact = await artifacts.readArtifact("SupplyChainDApp");
+async function getDeploymentInfo(contract, name) {
+  const artifact = await artifacts.readArtifact(name);
   const humanReadableAbi = new ethers.Interface(artifact.abi).format(false);
   const humanReadableAbiMinified = new ethers.Interface(artifact.abi).format(true);
 

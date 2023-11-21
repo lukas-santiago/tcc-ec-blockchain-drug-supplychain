@@ -435,5 +435,5 @@
         "function registerActivity(uint32,uint32,string)",
         "function supplyChainDApp() view returns (address)"
     ],
-    "address": "0xBe7f7d1Fa18DD3B3D67187DC0f4848eb2E532237"
+    "address": "0x3A731e562081691125DC7ca089a97c537E9C1897"
 }

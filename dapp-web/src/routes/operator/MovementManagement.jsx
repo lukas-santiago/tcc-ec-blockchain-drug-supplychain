@@ -37,7 +37,7 @@ export function MovementManagement() {
     address: contractInfoPart2.address,
     abi: contractInfoPart2.abi,
     functionName: "registerActivity",
-    args: [selectedCompany?.companyId, lot?.lotId, "test"],
+    args: [selectedCompany?.companyId, lot?.lotId, movementText],
     enabled: selectedCompany && lot && movementText.length > 0,
   });
 
