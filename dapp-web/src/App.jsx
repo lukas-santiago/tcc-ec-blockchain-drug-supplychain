@@ -1,47 +1,43 @@
 import "./App.scss";
 
 import { Route, Routes } from "react-router-dom";
-import { Layout } from "./config/Layout";
-import { NoMatch } from "./config/NoMatch";
-import { About } from "./routes/About";
-import Check from "./routes/Check";
-import { Home } from "./routes/Home";
-import { Web3Config } from "./config/Web3Config";
-import { CompanyManagement } from "./routes/company/CompanyManagement";
-import { CatalogManagement } from "./routes/operator/CatalogManagement";
-import { useAccount } from "wagmi";
-import { useRoleData } from "./hooks/useRoleData";
-import { LotManagement } from "./routes/operator/LotManagement";
-import { MovementManagement } from "./routes/operator/MovementManagement";
+import { LandingPage } from "./pages/home/LandingPage";
+import { PlatformLayout } from "./pages/platform/PlatformLayout";
+import { CompanyManagement } from "./pages/platform/manager/CompanyManagement";
+import { GrantOperatorRoles } from "./pages/platform/manager/GrantOperatorRoles";
+import { CatalogManagement } from "./pages/platform/operator/CatalogManagement";
+import { LotManagement } from "./pages/platform/operator/LotManagement";
+import { MovementManagement } from "./pages/platform/operator/MovementManagement";
+import { GrantSpecialRoles } from "./pages/platform/admin/GrantSpecialRoles";
 
 function App() {
   return (
-    <Web3Config>
+    <>
       <RouteConfig />
-    </Web3Config>
+    </>
   );
 }
 
 function RouteConfig() {
-  const { address } = useAccount();
-  const roles = useRoleData(address);
-
-  console.log({ rolesTop: roles });
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="check" element={<Check />} />
-        {roles.COMPANY === true && <Route path="company/manage" element={<CompanyManagement />} />}
-        {roles.OPERATOR === true && (
-          <>
-            <Route path="operator/catalog" element={<CatalogManagement />} />
-            <Route path="operator/lot" element={<LotManagement />} />
-            <Route path="operator/movement" element={<MovementManagement />} />
-          </>
-        )}
-        <Route path="*" element={<NoMatch />} />
+      <Route path="/" element={<LandingPage />}>
+        <Route index element={<LandingPage />} />
+        <Route path="*" element={<LandingPage />} />
+      </Route>
+      <Route path="platform" element={<PlatformLayout />}>
+        <>
+          <Route path="admin/grantSpecial" element={<GrantSpecialRoles />} />
+        </>
+        <>
+          <Route path="company/manage" element={<CompanyManagement />} />
+          <Route path="company/grantOperator" element={<GrantOperatorRoles />} />
+        </>
+        <>
+          <Route path="operator/catalog" element={<CatalogManagement />} />
+          <Route path="operator/lot" element={<LotManagement />} />
+          <Route path="operator/movement" element={<MovementManagement />} />
+        </>
       </Route>
     </Routes>
   );
