@@ -33,7 +33,7 @@ function RouteConfig() {
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="check" element={<Check />} />
-        {roles.COMPANY === true && <Route path="company/manage" element={<CompanyManagement />} />}
+        {roles.COMPANY === true && <Route path="/company/manage" element={<CompanyManagement />} />}
         {roles.OPERATOR === true && (
           <>
             <Route path="operator/catalog" element={<CatalogManagement />} />

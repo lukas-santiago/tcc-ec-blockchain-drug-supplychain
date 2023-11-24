@@ -59,7 +59,7 @@ export function CompanyManagement() {
     isManufacture: company[2],
     isIntermediate: company[3],
     active: company[4],
-  }));
+  })) || [];
 
   return (
     <div>
