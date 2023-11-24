@@ -251,7 +251,7 @@ function UserActions() {
       {roles.COMPANY === true && (
         <>
           <Dropdown.ItemText>Gestor</Dropdown.ItemText>
-          <Dropdown.Item className="ps-4" as={Link} to="/company/manage">
+          <Dropdown.Item className="ps-4" as={Link} to="company/manage">
             <span>Companhia</span>
           </Dropdown.Item>
           <Dropdown.Item className="ps-4" onClick={handleShow2}>
@@ -263,13 +263,13 @@ function UserActions() {
       {roles.OPERATOR === true && (
         <>
           <Dropdown.ItemText>Operador</Dropdown.ItemText>
-          <Dropdown.Item className="ps-4" as={Link} to="/operator/catalog">
+          <Dropdown.Item className="ps-4" as={Link} to="operator/catalog">
             <span>Gerenciar Catálogo</span>
           </Dropdown.Item>
-          <Dropdown.Item className="ps-4" as={Link} to="/operator/lot">
+          <Dropdown.Item className="ps-4" as={Link} to="operator/lot">
             <span>Gerenciar Lote</span>
           </Dropdown.Item>
-          <Dropdown.Item className="ps-4" as={Link} to="/operator/movement">
+          <Dropdown.Item className="ps-4" as={Link} to="operator/movement">
             <span>Gerenciar Movimentação</span>
           </Dropdown.Item>
         </>
