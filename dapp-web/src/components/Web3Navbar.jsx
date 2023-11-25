@@ -1,9 +1,13 @@
 import { ConnectKitButton } from "connectkit";
-import { Button, Container, Nav, Navbar } from "react-bootstrap";
-import { Link } from "react-router-dom";
-// import { ConnectButton } from "../../old_src/config/Web3Config";
-import { useAccount, useBalance } from "wagmi";
+import { Button, Container, Nav, Navbar, Spinner } from "react-bootstrap";
 import { MdOutlineChangeCircle } from "react-icons/md";
+import { Link } from "react-router-dom";
+import { useAccount, useBalance } from "wagmi";
+import { useModal } from "../hooks/useModal";
+import { useUserFetcher } from "../hooks/useUserFetcher";
+import { CustomModal } from "./CustomModal";
+import React from "react";
+import { LoadingButton } from "./LoadingButton";
 
 export function Web3Navbar() {
   return (
@@ -20,14 +24,13 @@ export function Web3Navbar() {
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
-        {/* <ConnectButton /> */}
-        <ConnectButton1 />
+        <ConnectButton />
       </Container>
     </Navbar>
   );
 }
 
-export default function ConnectButton1() {
+export default function ConnectButton() {
   const { address, isConnected } = useAccount();
   const { data } = useBalance({ address, enabled: isConnected });
   return (
@@ -39,6 +42,7 @@ export default function ConnectButton1() {
         {isConnected && (
           <>
             <ChangeAccount />
+            <Onboarding />
             <span>
               {Number(data?.formatted)?.toLocaleString("en-US") || ""} {data?.symbol || ""}
             </span>
@@ -52,28 +56,108 @@ export default function ConnectButton1() {
 }
 
 function ChangeAccount() {
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const handle = () => {
+    setIsLoading(true);
+    window.ethereum
+      .request({
+        method: "wallet_requestPermissions",
+        params: [
+          {
+            eth_accounts: {},
+          },
+        ],
+      })
+      .then((a) => {
+        console.log({ a });
+        setIsLoading(false);
+        window.location.reload();
+      })
+      .catch((e) => {
+        console.log({ e });
+        setIsLoading(false);
+      });
+  };
   return (
-    <Button
-      size="sm"
-      variant="outline-light"
-      onClick={() => {
-        window.ethereum
-          .request({
-            method: "wallet_requestPermissions",
-            params: [
-              {
-                eth_accounts: {},
-              },
-            ],
-          })
-          .then((a) => {
-            console.log({ a });
-            window.location.reload();
-          });
-      }}
+    <LoadingButton
+      isLoading={isLoading}
+      loadingElement={
+        <Button size="sm" variant="outline-light" onClick={handle} disabled>
+          <span className="ms-2">Carregando...</span>
+          <Spinner
+            as="span"
+            animation="grow"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+            style={{ marginLeft: "0.5em" }}
+          />
+        </Button>
+      }
     >
-      Trocar conta
-      <MdOutlineChangeCircle size="1.5em" style={{ marginLeft: "0.5em" }} />
-    </Button>
+      <Button size="sm" variant="outline-light" onClick={handle}>
+        Trocar conta
+        <MdOutlineChangeCircle size="1.5em" style={{ marginLeft: "0.5em" }} />
+      </Button>
+    </LoadingButton>
+  );
+}
+
+function Onboarding() {
+  const { address } = useAccount();
+
+  const { isRegistered, registerContract } = useUserFetcher(address);
+
+  const { show, handleClose, handleShow } = useModal();
+
+  let messageElement = <></>;
+  if (registerContract.write.isSuccess) {
+    messageElement = <p>Parabéns, seu registro foi enviado. Aguarde a transação ser confirmada.</p>;
+  } else if (registerContract?.write?.isLoading || registerContract?.wait?.isLoading) {
+    messageElement = <p>Para concluir o registro, cheque sua carteira e aprove a transação.</p>;
+  } else {
+    messageElement = (
+      <>
+        <p className="text-center text-secondary-emphasis">
+          Parece que voce ainda não se registrou.
+          <br />É necessário registrar-se e isso só pode ser feito uma vez.
+        </p>
+        {(registerContract?.prepare?.isError ||
+          registerContract?.write?.isError ||
+          registerContract?.wait?.isError) && <p>Algo deu errado, tente novamente.</p>}
+      </>
+    );
+  }
+
+  return (
+    <>
+      {isRegistered == false && (
+        <>
+          <Button variant="success" onClick={handleShow} size="sm" className="me-3">
+            Concluir registro
+          </Button>
+          <CustomModal
+            show={show}
+            handleClose={handleClose}
+            title="Registrar-se"
+            buttons={
+              <>
+                <Button variant="secondary" onClick={handleClose}>
+                  Cancelar
+                </Button>
+                <LoadingButton
+                  isLoading={registerContract?.write?.isLoading}
+                  onClick={registerContract?.write?.write}
+                  title="Registrar-se"
+                />
+              </>
+            }
+          >
+            {messageElement}
+          </CustomModal>
+        </>
+      )}
+    </>
   );
 }

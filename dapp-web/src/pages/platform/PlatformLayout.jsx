@@ -1,7 +1,11 @@
+import React from "react";
 import { Col, Container, Dropdown, Row, Toast, ToastContainer } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
-import { Web3Config } from "../../config/Web3Config";
+import { useAccount } from "wagmi";
 import { Web3Navbar } from "../../components/Web3Navbar";
+import { Web3Config } from "../../config/Web3Config";
+import { Web3Context } from "../../contexts/Web3Context";
+import { useRoleData } from "../../hooks/useRoleData";
 
 export function PlatformLayout() {
   return (
@@ -16,11 +20,9 @@ export function PlatformLayout() {
                 borderRight: "solid 0.2em var(--bs-gray-900)",
               }}
             >
-              Menus
-              <hr />
               <Menus />
             </Col>
-            <Col>
+            <Col className="ps-5 pe-5">
               <Outlet />
             </Col>
           </Row>
@@ -65,8 +67,18 @@ function StackingExample() {
 }
 
 function Menus() {
-  const menus = [
-    {
+  const { address } = useAccount();
+  const { web3Data } = React.useContext(Web3Context);
+  useRoleData(address);
+
+  console.log({ web3Data });
+
+  const { roles } = web3Data?.user || {};
+
+  const menus = [];
+
+  if (roles?.OWNER === true)
+    menus.push({
       title: "Administrador",
       children: [
         {
@@ -74,8 +86,10 @@ function Menus() {
           path: "admin/grantSpecial",
         },
       ],
-    },
-    {
+    });
+
+  if (roles?.COMPANY === true)
+    menus.push({
       title: "Gestor",
       children: [
         {
@@ -87,8 +101,10 @@ function Menus() {
           path: "company/grantOperator",
         },
       ],
-    },
-    {
+    });
+
+  if (roles?.OPERATOR === true)
+    menus.push({
       title: "Operador",
       children: [
         {
@@ -104,22 +120,26 @@ function Menus() {
           path: "operator/movement",
         },
       ],
-    },
-  ];
+    });
+
   return (
-    <div>
-      {menus.map((menu, index) => (
-        <div key={index}>
-          <span>{menu.title}</span>
-          <>
-            {menu.children.map((child, index) => (
-              <Dropdown.Item key={index} as={Link} to={child.path} className="ps-4">
-                {child.title}
-              </Dropdown.Item>
-            ))}
-          </>
-        </div>
-      ))}
-    </div>
+    <>
+      Serviços
+      <hr />
+      <div>
+        {menus.map((menu, index) => (
+          <div key={index}>
+            <span>{menu.title}</span>
+            <>
+              {menu.children.map((child, index) => (
+                <Dropdown.Item key={index} as={Link} to={child.path} className="ps-4">
+                  {child.title}
+                </Dropdown.Item>
+              ))}
+            </>
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
