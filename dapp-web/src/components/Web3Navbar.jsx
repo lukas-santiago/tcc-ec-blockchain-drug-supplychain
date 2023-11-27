@@ -72,7 +72,7 @@ function ChangeAccount() {
       .then((a) => {
         console.log({ a });
         setIsLoading(false);
-        window.location.reload();
+        window.location.pathname = "/tcc-ec-blockchain-drug-supplychain/platform";
       })
       .catch((e) => {
         console.log({ e });
@@ -147,7 +147,7 @@ function Onboarding() {
                   Cancelar
                 </Button>
                 <LoadingButton
-                  isLoading={registerContract?.write?.isLoading}
+                  isLoading={registerContract?.write?.isLoading || registerContract?.wait?.isLoading}
                   onClick={registerContract?.write?.write}
                   title="Registrar-se"
                 />

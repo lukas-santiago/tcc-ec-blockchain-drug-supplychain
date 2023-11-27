@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Container, Dropdown, Row, Toast, ToastContainer } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
 import { useAccount } from "wagmi";
 import { Web3Navbar } from "../../components/Web3Navbar";
@@ -22,49 +22,49 @@ export function PlatformLayout() {
             >
               <Menus />
             </Col>
-            <Col className="ps-5 pe-5">
+            <Col className="ps-5 pe-5" md={9}>
               <Outlet />
             </Col>
           </Row>
         </Container>
-        <StackingExample />
+        {/* <StackingExample /> */}
       </Web3Config>
     </>
   );
 }
 
-function StackingExample() {
-  return (
-    <>
-      <ToastContainer position="bottom-start">
-        <div
-          className="d-flex flex-column gap-2 add-blur-at-top custom-scrollbar p-4"
-          style={{
-            maxHeight: "65vh",
-            overflowY: "auto",
-          }}
-        >
-          <Toast style={{ width: "auto" }}>
-            <Toast.Header>
-              <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-              <strong className="me-auto">Bootstrap</strong>
-              <small className="text-muted">2 seconds ago</small>
-            </Toast.Header>
-            <Toast.Body>Heads up, toasts will stack automatically</Toast.Body>
-          </Toast>
-          <Toast style={{ width: "auto" }}>
-            <Toast.Header>
-              <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-              <strong className="me-auto">Bootstrap</strong>
-              <small className="text-muted">2 seconds ago</small>
-            </Toast.Header>
-            <Toast.Body>Heads up, toasts will stack automatically</Toast.Body>
-          </Toast>
-        </div>
-      </ToastContainer>
-    </>
-  );
-}
+// function StackingExample() {
+//   return (
+//     <>
+//       <ToastContainer position="bottom-start">
+//         <div
+//           className="d-flex flex-column gap-2 add-blur-at-top custom-scrollbar p-4"
+//           style={{
+//             maxHeight: "65vh",
+//             overflowY: "auto",
+//           }}
+//         >
+//           <Toast style={{ width: "auto" }}>
+//             <Toast.Header>
+//               <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
+//               <strong className="me-auto">Bootstrap</strong>
+//               <small className="text-muted">2 seconds ago</small>
+//             </Toast.Header>
+//             <Toast.Body>Heads up, toasts will stack automatically</Toast.Body>
+//           </Toast>
+//           <Toast style={{ width: "auto" }}>
+//             <Toast.Header>
+//               <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
+//               <strong className="me-auto">Bootstrap</strong>
+//               <small className="text-muted">2 seconds ago</small>
+//             </Toast.Header>
+//             <Toast.Body>Heads up, toasts will stack automatically</Toast.Body>
+//           </Toast>
+//         </div>
+//       </ToastContainer>
+//     </>
+//   );
+// }
 
 function Menus() {
   const { address } = useAccount();
@@ -124,17 +124,17 @@ function Menus() {
 
   return (
     <>
-      Serviços
+      <h4>Serviços</h4>
       <hr />
-      <div>
+      <div className="d-flex flex-column gap-3">
         {menus.map((menu, index) => (
-          <div key={index}>
-            <span>{menu.title}</span>
+          <div key={index} className="d-flex flex-column gap-2">
+            <strong className="pb-2 text-center">{menu.title}</strong>
             <>
               {menu.children.map((child, index) => (
-                <Dropdown.Item key={index} as={Link} to={child.path} className="ps-4">
+                <Button key={index} as={Link} to={child.path} className="ps-4" variant="secondary">
                   {child.title}
-                </Dropdown.Item>
+                </Button>
               ))}
             </>
           </div>

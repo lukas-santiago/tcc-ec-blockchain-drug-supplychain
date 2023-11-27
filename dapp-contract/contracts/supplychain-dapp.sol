@@ -318,8 +318,7 @@ contract SupplyChainDappPart2 {
     uint32 lotId,
     string memory activity
   ) public onlyRole(OPERATOR_ROLE) isOperatorOfCompany(companyId) isIntermediateCompany(companyId) onlyValidLot(lotId) {
-    activityCount++;
-    lotActivities[activityCount].push(
+    lotActivities[lotId].push(
       Models.LotActivity(activityCount, lotId, activity, msg.sender, block.timestamp, false, 0)
     );
   }

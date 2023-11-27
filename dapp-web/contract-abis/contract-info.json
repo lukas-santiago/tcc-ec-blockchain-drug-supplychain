@@ -1091,5 +1091,5 @@
         "function supportsInterface(bytes4) view returns (bool)",
         "function users(address) view returns (bool,address)"
     ],
-    "address": "0xF46ae292149af945A3C17b23f59797477F5540Aa"
+    "address": "0x981f0Bc3169df42D288e8B7cb0BD20947a9e7BF0"
 }

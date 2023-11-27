@@ -28,6 +28,7 @@ function RouteConfig() {
     <Routes>
       <Route path="/" element={<LandingPage />}>
         <Route index element={<LandingPage />} />
+        <Route path="search" element={<NoMatch />} />
         <Route path="*" element={<NoMatch />} />
       </Route>
       <Route path="platform" element={<PlatformLayout />}>

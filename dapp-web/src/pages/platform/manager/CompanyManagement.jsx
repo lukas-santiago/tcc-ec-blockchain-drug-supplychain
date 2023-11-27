@@ -1,7 +1,7 @@
 import { useDebounce } from "@uidotdev/usehooks";
 import PropTypes from "prop-types";
 import React from "react";
-import { Button, ButtonGroup, Form, Modal, Spinner, Table } from "react-bootstrap";
+import { Button, ButtonGroup, Form, Modal, Table } from "react-bootstrap";
 import { hexToString, stringToHex } from "viem";
 import {
   useAccount,
@@ -13,6 +13,7 @@ import {
   useWaitForTransaction,
 } from "wagmi";
 import contractInfo from "../../../../contract-abis/contract-info.json";
+import { LoadingButton } from "../../../components/LoadingButton";
 
 export function CompanyManagement() {
   const { address } = useAccount();
@@ -53,13 +54,14 @@ export function CompanyManagement() {
   // });
   console.log({ user, data });
 
-  const companiesRows = data?.pages[0]?.map(({ result: company }) => ({
-    id: company[0],
-    name: hexToString(company[1], { size: 32 }),
-    isManufacture: company[2],
-    isIntermediate: company[3],
-    active: company[4],
-  }));
+  const companiesRows =
+    data?.pages[0]?.map(({ result: company }) => ({
+      id: company[0],
+      name: hexToString(company[1], { size: 32 }),
+      isManufacture: company[2],
+      isIntermediate: company[3],
+      active: company[4],
+    })) || [];
 
   return (
     <div>
@@ -111,10 +113,13 @@ function CompanyModalForm({ show, handleClose, defaultValues }) {
         isManufacture: !!isManufacture,
         isIntermediate: !!isIntermediate,
         active: true,
+        productCatalogIds: [],
+        lotIds: [],
       },
     ];
 
     addCompanyArgsObject = [Object.values(_addCompanyArgsObject[0])];
+    console.log({ addCompanyArgsObject });
   } else {
     addCompanyArgsObject = {
       name: stringToHex(companyName || "", { size: 32 }),
@@ -130,10 +135,17 @@ function CompanyModalForm({ show, handleClose, defaultValues }) {
     args: Object.values(addCompanyArgsObject),
   });
 
-  const { write } = useContractWrite(config);
+  const { write, isLoading: isWriteLoading, data } = useContractWrite(config);
+
+  const { isLoading: isWaitLoading } = useWaitForTransaction({
+    hash: data?.hash,
+  });
+
   if (error) {
     console.log(error, defaultValues);
   }
+
+  console.log({ isWriteLoading, isWaitLoading });
 
   const unwatch = useContractEvent({
     address: contractInfo.address,
@@ -192,15 +204,18 @@ function CompanyModalForm({ show, handleClose, defaultValues }) {
         <Button variant="secondary" onClick={handleClose}>
           Cancelar
         </Button>
-        <Button
-          variant="primary"
-          onClick={() => {
-            write();
-            console.log({ companyName, isManufacture, isIntermediate });
-          }}
-        >
-          Criar
-        </Button>
+        <LoadingButton isLoading={isWriteLoading || isWaitLoading}>
+          <Button
+            variant="primary"
+            disabled={write === undefined}
+            onClick={() => {
+              write?.();
+              console.log({ companyName, isManufacture, isIntermediate, isWriteLoading, isWaitLoading, config });
+            }}
+          >
+            Salvar
+          </Button>
+        </LoadingButton>
       </Modal.Footer>
     </Modal>
   );
@@ -281,7 +296,7 @@ function DisableCompanyModal({ showDisableModal, handleCloseDisable, company }) 
   });
   const _ = useDebounce(null, 1000);
 
-  const { data, write } = useContractWrite(config);
+  const { data, write, isLoading: isWriteLoading } = useContractWrite(config);
 
   const { isLoading, isSuccess, error2 } = useWaitForTransaction({
     hash: data?.hash,
@@ -327,7 +342,7 @@ function DisableCompanyModal({ showDisableModal, handleCloseDisable, company }) 
         <Button variant="secondary" onClick={handleCloseDisable}>
           Cancelar
         </Button>
-        {!isLoading ? (
+        <LoadingButton isLoading={isWriteLoading || isLoading} variant="danger">
           <Button
             variant="danger"
             onClick={() => {
@@ -336,12 +351,7 @@ function DisableCompanyModal({ showDisableModal, handleCloseDisable, company }) 
           >
             Desativar
           </Button>
-        ) : (
-          <Button variant="primary" disabled>
-            <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
-            <span className="ms-2">Carregando...</span>
-          </Button>
-        )}
+        </LoadingButton>
       </Modal.Footer>
     </Modal>
   );

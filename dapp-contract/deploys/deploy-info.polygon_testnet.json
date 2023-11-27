@@ -32979,5 +32979,1127 @@
         },
         "network": "polygon_testnet",
         "deployed_at": "2023-11-24T23:50:06.896Z"
+    },
+    {
+        "contractName": "SupplyChainDApp",
+        "address": "0x981f0Bc3169df42D288e8B7cb0BD20947a9e7BF0",
+        "owner": "0xBb5d367259465a5E1AF13Fc55188A1e611E08E21",
+        "abi": {
+            "full": [
+                {
+                    "inputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "constructor"
+                },
+                {
+                    "inputs": [],
+                    "name": "AccessControlBadConfirmation",
+                    "type": "error"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "account",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "neededRole",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "name": "AccessControlUnauthorizedAccount",
+                    "type": "error"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": false,
+                            "internalType": "uint32",
+                            "name": "companyId",
+                            "type": "uint32"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "account",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "CompanyRegistered",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "bytes32",
+                            "name": "role",
+                            "type": "bytes32"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "bytes32",
+                            "name": "previousAdminRole",
+                            "type": "bytes32"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "bytes32",
+                            "name": "newAdminRole",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "name": "RoleAdminChanged",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "bytes32",
+                            "name": "role",
+                            "type": "bytes32"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "account",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "sender",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "RoleGranted",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "bytes32",
+                            "name": "role",
+                            "type": "bytes32"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "account",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "sender",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "RoleRevoked",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "user",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "UserRegistered",
+                    "type": "event"
+                },
+                {
+                    "inputs": [],
+                    "name": "COMPANY_ROLE",
+                    "outputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "DEFAULT_ADMIN_ROLE",
+                    "outputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "OPERATOR_ROLE",
+                    "outputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "OWNER_ROLE",
+                    "outputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "companyId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "name": "addCatalog",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "isManufacture",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "isIntermediate",
+                            "type": "bool"
+                        }
+                    ],
+                    "name": "addCompany",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "companyId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "quantity",
+                            "type": "uint32"
+                        }
+                    ],
+                    "name": "addLot",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "catalogCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "",
+                            "type": "uint32"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "",
+                            "type": "uint32"
+                        }
+                    ],
+                    "name": "catalogs",
+                    "outputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "catalogId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "companyId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "productName",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "",
+                            "type": "uint32"
+                        }
+                    ],
+                    "name": "companies",
+                    "outputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "companyId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "isManufacture",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "isIntermediate",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "companiesCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "",
+                            "type": "uint32"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "companyId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "lotId",
+                            "type": "uint32"
+                        }
+                    ],
+                    "name": "confirmLot",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "companyId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "catalogId",
+                            "type": "uint32"
+                        }
+                    ],
+                    "name": "disableCatalog",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "companyId",
+                            "type": "uint32"
+                        }
+                    ],
+                    "name": "disableCompany",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "companyId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "lotId",
+                            "type": "uint32"
+                        }
+                    ],
+                    "name": "disableLot",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "companyId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "catalogId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "name",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "name": "editCatalog",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "components": [
+                                {
+                                    "internalType": "uint32",
+                                    "name": "companyId",
+                                    "type": "uint32"
+                                },
+                                {
+                                    "internalType": "bytes32",
+                                    "name": "name",
+                                    "type": "bytes32"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isManufacture",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isIntermediate",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "active",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "uint32[]",
+                                    "name": "productCatalogIds",
+                                    "type": "uint32[]"
+                                },
+                                {
+                                    "internalType": "uint32[]",
+                                    "name": "lotIds",
+                                    "type": "uint32[]"
+                                }
+                            ],
+                            "internalType": "struct Models.Company",
+                            "name": "company",
+                            "type": "tuple"
+                        }
+                    ],
+                    "name": "editCompany",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "companyId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "lotId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "newQuantity",
+                            "type": "uint32"
+                        },
+                        {
+                            "components": [
+                                {
+                                    "internalType": "uint32",
+                                    "name": "catalogId",
+                                    "type": "uint32"
+                                },
+                                {
+                                    "internalType": "uint32",
+                                    "name": "quantity",
+                                    "type": "uint32"
+                                }
+                            ],
+                            "internalType": "struct Models.Product[]",
+                            "name": "newProducts",
+                            "type": "tuple[]"
+                        }
+                    ],
+                    "name": "editLot",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "catalogId",
+                            "type": "uint32"
+                        }
+                    ],
+                    "name": "getCatalog",
+                    "outputs": [
+                        {
+                            "components": [
+                                {
+                                    "internalType": "uint32",
+                                    "name": "catalogId",
+                                    "type": "uint32"
+                                },
+                                {
+                                    "internalType": "uint32",
+                                    "name": "companyId",
+                                    "type": "uint32"
+                                },
+                                {
+                                    "internalType": "bytes32",
+                                    "name": "productName",
+                                    "type": "bytes32"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "active",
+                                    "type": "bool"
+                                }
+                            ],
+                            "internalType": "struct Models.Catalog",
+                            "name": "",
+                            "type": "tuple"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "companyId",
+                            "type": "uint32"
+                        }
+                    ],
+                    "name": "getCompany",
+                    "outputs": [
+                        {
+                            "components": [
+                                {
+                                    "internalType": "uint32",
+                                    "name": "companyId",
+                                    "type": "uint32"
+                                },
+                                {
+                                    "internalType": "bytes32",
+                                    "name": "name",
+                                    "type": "bytes32"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isManufacture",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "isIntermediate",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "active",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "uint32[]",
+                                    "name": "productCatalogIds",
+                                    "type": "uint32[]"
+                                },
+                                {
+                                    "internalType": "uint32[]",
+                                    "name": "lotIds",
+                                    "type": "uint32[]"
+                                }
+                            ],
+                            "internalType": "struct Models.Company",
+                            "name": "",
+                            "type": "tuple"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "lotId",
+                            "type": "uint32"
+                        }
+                    ],
+                    "name": "getLot",
+                    "outputs": [
+                        {
+                            "components": [
+                                {
+                                    "internalType": "uint32",
+                                    "name": "lotId",
+                                    "type": "uint32"
+                                },
+                                {
+                                    "internalType": "uint32",
+                                    "name": "manufacturerId",
+                                    "type": "uint32"
+                                },
+                                {
+                                    "internalType": "uint32",
+                                    "name": "quantity",
+                                    "type": "uint32"
+                                },
+                                {
+                                    "internalType": "uint32",
+                                    "name": "catalogCount",
+                                    "type": "uint32"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "confirmed",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "active",
+                                    "type": "bool"
+                                }
+                            ],
+                            "internalType": "struct Models.Lot",
+                            "name": "",
+                            "type": "tuple"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "lotId",
+                            "type": "uint32"
+                        }
+                    ],
+                    "name": "getLotProducts",
+                    "outputs": [
+                        {
+                            "components": [
+                                {
+                                    "internalType": "uint32",
+                                    "name": "catalogId",
+                                    "type": "uint32"
+                                },
+                                {
+                                    "internalType": "uint32",
+                                    "name": "quantity",
+                                    "type": "uint32"
+                                }
+                            ],
+                            "internalType": "struct Models.Product[]",
+                            "name": "",
+                            "type": "tuple[]"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "role",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "name": "getRoleAdmin",
+                    "outputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "_address",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "getUser",
+                    "outputs": [
+                        {
+                            "components": [
+                                {
+                                    "internalType": "bool",
+                                    "name": "registered",
+                                    "type": "bool"
+                                },
+                                {
+                                    "internalType": "address",
+                                    "name": "_address",
+                                    "type": "address"
+                                },
+                                {
+                                    "internalType": "uint32[]",
+                                    "name": "companyIds",
+                                    "type": "uint32[]"
+                                },
+                                {
+                                    "internalType": "uint32[]",
+                                    "name": "operatorIds",
+                                    "type": "uint32[]"
+                                }
+                            ],
+                            "internalType": "struct Models.User",
+                            "name": "",
+                            "type": "tuple"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "companyId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "account",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "companyOwner",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "grantOperatorRole",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "role",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "account",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "grantRole",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "role",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "account",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "hasRole",
+                    "outputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "lotCount",
+                    "outputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "",
+                            "type": "uint32"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "lotProducts",
+                    "outputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "catalogId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "quantity",
+                            "type": "uint32"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "",
+                            "type": "uint32"
+                        }
+                    ],
+                    "name": "lots",
+                    "outputs": [
+                        {
+                            "internalType": "uint32",
+                            "name": "lotId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "manufacturerId",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "quantity",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "catalogCount",
+                            "type": "uint32"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "confirmed",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "active",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "register",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "role",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "callerConfirmation",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "renounceRole",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "role",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "account",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "revokeRole",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "bytes4",
+                            "name": "interfaceId",
+                            "type": "bytes4"
+                        }
+                    ],
+                    "name": "supportsInterface",
+                    "outputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "users",
+                    "outputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "registered",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "_address",
+                            "type": "address"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                }
+            ],
+            "humanReadableAbi": [
+                "constructor() nonpayable",
+                "error AccessControlBadConfirmation()",
+                "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+                "event CompanyRegistered(uint32 companyId, address indexed account)",
+                "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+                "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+                "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+                "event UserRegistered(address indexed user)",
+                "function COMPANY_ROLE() view returns (bytes32)",
+                "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+                "function OPERATOR_ROLE() view returns (bytes32)",
+                "function OWNER_ROLE() view returns (bytes32)",
+                "function addCatalog(uint32 companyId, bytes32 name)",
+                "function addCompany(bytes32 name, bool isManufacture, bool isIntermediate)",
+                "function addLot(uint32 companyId, uint32 quantity)",
+                "function catalogCount() view returns (uint32)",
+                "function catalogs(uint32) view returns (uint32 catalogId, uint32 companyId, bytes32 productName, bool active)",
+                "function companies(uint32) view returns (uint32 companyId, bytes32 name, bool isManufacture, bool isIntermediate, bool active)",
+                "function companiesCount() view returns (uint32)",
+                "function confirmLot(uint32 companyId, uint32 lotId)",
+                "function disableCatalog(uint32 companyId, uint32 catalogId)",
+                "function disableCompany(uint32 companyId)",
+                "function disableLot(uint32 companyId, uint32 lotId)",
+                "function editCatalog(uint32 companyId, uint32 catalogId, bytes32 name)",
+                "function editCompany(tuple(uint32 companyId, bytes32 name, bool isManufacture, bool isIntermediate, bool active, uint32[] productCatalogIds, uint32[] lotIds) company)",
+                "function editLot(uint32 companyId, uint32 lotId, uint32 newQuantity, tuple(uint32 catalogId, uint32 quantity)[] newProducts)",
+                "function getCatalog(uint32 catalogId) view returns (tuple(uint32 catalogId, uint32 companyId, bytes32 productName, bool active))",
+                "function getCompany(uint32 companyId) view returns (tuple(uint32 companyId, bytes32 name, bool isManufacture, bool isIntermediate, bool active, uint32[] productCatalogIds, uint32[] lotIds))",
+                "function getLot(uint32 lotId) view returns (tuple(uint32 lotId, uint32 manufacturerId, uint32 quantity, uint32 catalogCount, bool confirmed, bool active))",
+                "function getLotProducts(uint32 lotId) view returns (tuple(uint32 catalogId, uint32 quantity)[])",
+                "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+                "function getUser(address _address) view returns (tuple(bool registered, address _address, uint32[] companyIds, uint32[] operatorIds))",
+                "function grantOperatorRole(uint32 companyId, address account, address companyOwner)",
+                "function grantRole(bytes32 role, address account)",
+                "function hasRole(bytes32 role, address account) view returns (bool)",
+                "function lotCount() view returns (uint32)",
+                "function lotProducts(uint32, uint256) view returns (uint32 catalogId, uint32 quantity)",
+                "function lots(uint32) view returns (uint32 lotId, uint32 manufacturerId, uint32 quantity, uint32 catalogCount, bool confirmed, bool active)",
+                "function register()",
+                "function renounceRole(bytes32 role, address callerConfirmation)",
+                "function revokeRole(bytes32 role, address account)",
+                "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+                "function users(address) view returns (bool registered, address _address)"
+            ],
+            "humanReadableAbiMinified": [
+                "constructor() nonpayable",
+                "error AccessControlBadConfirmation()",
+                "error AccessControlUnauthorizedAccount(address,bytes32)",
+                "event CompanyRegistered(uint32,address indexed)",
+                "event RoleAdminChanged(bytes32 indexed,bytes32 indexed,bytes32 indexed)",
+                "event RoleGranted(bytes32 indexed,address indexed,address indexed)",
+                "event RoleRevoked(bytes32 indexed,address indexed,address indexed)",
+                "event UserRegistered(address indexed)",
+                "function COMPANY_ROLE() view returns (bytes32)",
+                "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+                "function OPERATOR_ROLE() view returns (bytes32)",
+                "function OWNER_ROLE() view returns (bytes32)",
+                "function addCatalog(uint32,bytes32)",
+                "function addCompany(bytes32,bool,bool)",
+                "function addLot(uint32,uint32)",
+                "function catalogCount() view returns (uint32)",
+                "function catalogs(uint32) view returns (uint32,uint32,bytes32,bool)",
+                "function companies(uint32) view returns (uint32,bytes32,bool,bool,bool)",
+                "function companiesCount() view returns (uint32)",
+                "function confirmLot(uint32,uint32)",
+                "function disableCatalog(uint32,uint32)",
+                "function disableCompany(uint32)",
+                "function disableLot(uint32,uint32)",
+                "function editCatalog(uint32,uint32,bytes32)",
+                "function editCompany(tuple(uint32,bytes32,bool,bool,bool,uint32[],uint32[]))",
+                "function editLot(uint32,uint32,uint32,tuple(uint32,uint32)[])",
+                "function getCatalog(uint32) view returns (tuple(uint32,uint32,bytes32,bool))",
+                "function getCompany(uint32) view returns (tuple(uint32,bytes32,bool,bool,bool,uint32[],uint32[]))",
+                "function getLot(uint32) view returns (tuple(uint32,uint32,uint32,uint32,bool,bool))",
+                "function getLotProducts(uint32) view returns (tuple(uint32,uint32)[])",
+                "function getRoleAdmin(bytes32) view returns (bytes32)",
+                "function getUser(address) view returns (tuple(bool,address,uint32[],uint32[]))",
+                "function grantOperatorRole(uint32,address,address)",
+                "function grantRole(bytes32,address)",
+                "function hasRole(bytes32,address) view returns (bool)",
+                "function lotCount() view returns (uint32)",
+                "function lotProducts(uint32,uint256) view returns (uint32,uint32)",
+                "function lots(uint32) view returns (uint32,uint32,uint32,uint32,bool,bool)",
+                "function register()",
+                "function renounceRole(bytes32,address)",
+                "function revokeRole(bytes32,address)",
+                "function supportsInterface(bytes4) view returns (bool)",
+                "function users(address) view returns (bool,address)"
+            ]
+        },
+        "deploymentTransaction": {
+            "accessList": [],
+            "blockNumber": null,
+            "blockHash": null,
+            "chainId": "80001",
+            "from": "0xBb5d367259465a5E1AF13Fc55188A1e611E08E21",
+            "gasLimit": "5192147",
+            "gasPrice": "2250000025",
+            "hash": "0xb9b7aaa126665069841d92c99584ed980357b7756bedeb63bf018ac99f000ded",
+            "maxFeePerGas": "2250000025",
+            "maxPriorityFeePerGas": "2250000007",
+            "signature": {
+                "_type": "signature",
+                "networkV": null,
+                "r": "0x087e4d864bd0940649c3ab57f245f26bb8a86dddd09be808d60837e4ce3a62c1",
+                "s": "0x70cace6104e8c4e5f5eaa12900c6a7fe875c2bb059861f0eb65cd8a3edb52bb8",
+                "v": 27
+            },
+            "to": null,
+            "type": 2,
+            "value": "0"
+        },
+        "network": "polygon_testnet",
+        "deployed_at": "2023-11-27T01:38:12.789Z"
     }
 ]

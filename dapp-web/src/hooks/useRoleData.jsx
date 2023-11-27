@@ -7,8 +7,10 @@ export function useRoleData(address) {
   const { web3Data, setWeb3Data } = React.useContext(Web3Context);
 
   const roles = web3Data?.user?.roles || {};
-  const setRoles = (data) =>
-    setWeb3Data({ ...web3Data, user: { ...web3Data.user, roles: { ...web3Data.user.roles, ...data } } });
+  const setRoles = (data) => {
+    console.log({ data, roles: web3Data?.user?.roles || {}, a: { ...(web3Data?.user?.roles || {}), ...data } });
+    setWeb3Data((prev) => ({ ...prev, user: { ...prev.user, roles: { ...prev.user.roles, ...data } } }));
+  };
 
   const availableRoles = {
     COMPANY: "0x434f4d50414e5900000000000000000000000000000000000000000000000000",

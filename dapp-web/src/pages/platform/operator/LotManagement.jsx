@@ -25,6 +25,7 @@ import {
   useWaitForTransaction,
 } from "wagmi";
 import contractInfo from "../../../../contract-abis/contract-info.json";
+import { LoadingButton } from "../../../components/LoadingButton";
 
 export function LotManagement() {
   const { companiesRows: rawCompaniesRows } = useCompaniesFetcher();
@@ -117,7 +118,7 @@ function useCompaniesFetcher() {
 }
 
 function LotManagementTable({ company }) {
-  const { lotData } = useLotFetcher(company);
+  const { lotData, refetchLot } = useLotFetcher(company);
 
   console.log({ lotData });
   return (
@@ -126,6 +127,7 @@ function LotManagementTable({ company }) {
         <tr>
           <th>#</th>
           <th>Quantidade</th>
+          <th>Código</th>
           <th>Confirmado</th>
           <th>Ativo</th>
           <th width={1}>Ações</th>
@@ -133,7 +135,7 @@ function LotManagementTable({ company }) {
       </thead>
       <tbody>
         {lotData?.map((lot, i) => (
-          <LotManagementTableRow key={i} lot={lot} company={company} />
+          <LotManagementTableRow key={i} lot={lot} company={company} refetchLot={refetchLot} />
         ))}
       </tbody>
     </Table>
@@ -144,27 +146,40 @@ LotManagementTable.propTypes = {
   company: PropTypes.object,
 };
 
-function LotManagementTableRow({ lot, company }) {
+function LotManagementTableRow({ lot, company, refetchLot }) {
   const [showEditModal, setShowEditModal] = React.useState(false);
 
-  const handleClose = () => setShowEditModal(false);
+  const handleClose = () => {
+    setShowEditModal(false);
+    refetchLot();
+  };
   const handleShow = () => setShowEditModal(true);
 
   const [showDisableModal, setShowDisableModal] = React.useState(false);
 
-  const handleCloseDisable = () => setShowDisableModal(false);
+  const handleCloseDisable = () => {
+    setShowDisableModal(false);
+    refetchLot();
+  };
   const handleShowDisable = () => setShowDisableModal(true);
 
   const [showConfirmModal, setShowConfirmModal] = React.useState(false);
 
-  const handleCloseConfirm = () => setShowConfirmModal(false);
+  const handleCloseConfirm = () => {
+    setShowConfirmModal(false);
+    refetchLot();
+  };
   const handleShowConfirm = () => setShowConfirmModal(true);
+
+  let code = btoa(btoa(JSON.stringify([company?.companyId, lot?.lotId])));
+  code = code[code.length - 1] == "=" ? code.substring(0, code.length - 1) : code;
 
   return (
     <>
       <tr>
         <td>{lot?.lotId}</td>
         <td>{lot?.quantity}</td>
+        <td>{code}</td>
         <td>{lot?.confirmed ? "Sim" : "Não"}</td>
         <td>{lot?.active ? "Sim" : "Não"}</td>
         <td>
@@ -202,12 +217,13 @@ function LotManagementTableRow({ lot, company }) {
 LotManagementTableRow.propTypes = {
   lot: PropTypes.object,
   company: PropTypes.object,
+  refetchLot: PropTypes.func,
 };
 
 function useLotFetcher(company) {
   console.log({ company });
 
-  const { data } = useContractInfiniteReads({
+  const { data, refetch } = useContractInfiniteReads({
     cacheKey: "lots",
     contracts() {
       return company.lotIds.map((lot) => ({
@@ -227,6 +243,7 @@ function useLotFetcher(company) {
 
   return {
     lotData,
+    refetchLot: refetch,
   };
 }
 
@@ -247,19 +264,21 @@ function LotModalForm({ company, show, handleClose, defaultLot }) {
     args: lotData,
     enabled: Boolean(lotQuantity),
   });
-  const { data, write } = useContractWrite(config);
+  const { data, write, isLoading: isWriteLoading } = useContractWrite(config);
 
   const { isLoading } = useWaitForTransaction({
     hash: data?.hash,
     onSuccess: () => {
-      handleClose();
-      window.location.reload();
+      setTimeout(() => {
+        handleClose();
+        window.location.reload();
+      }, 5000);
     },
   });
 
   const disabled = !write || isLoading;
 
-  console.log({ lotQuantity, company, defaultLot });
+  console.log({ lotQuantity, company, defaultLot, isWriteLoading, isLoading });
 
   return (
     <Modal show={show} onHide={handleClose}>
@@ -297,7 +316,7 @@ function LotModalForm({ company, show, handleClose, defaultLot }) {
         <Button variant="secondary" onClick={handleClose}>
           Cancelar
         </Button>
-        {!isLoading ? (
+        {/* {!isWriteLoading || !isLoading ? (
           <Button
             variant="primary"
             onClick={() => {
@@ -312,7 +331,18 @@ function LotModalForm({ company, show, handleClose, defaultLot }) {
             <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
             <span className="ms-2">Carregando...</span>
           </Button>
-        )}
+        )} */}
+        <LoadingButton isLoading={isWriteLoading || isLoading}>
+          <Button
+            variant="primary"
+            onClick={() => {
+              write?.();
+            }}
+            disabled={disabled}
+          >
+            Salvar
+          </Button>
+        </LoadingButton>
       </Modal.Footer>
     </Modal>
   );
@@ -335,7 +365,7 @@ function DisableLotModal({ showDisableModal, handleCloseDisable, company, lot })
   });
   const _ = useDebounce(null, 1000);
 
-  const { data, write } = useContractWrite(config);
+  const { data, write, isLoading: isWriteLoading } = useContractWrite(config);
 
   const { isLoading, isSuccess, error2 } = useWaitForTransaction({
     hash: data?.hash,
@@ -383,7 +413,7 @@ function DisableLotModal({ showDisableModal, handleCloseDisable, company, lot })
         <Button variant="secondary" onClick={handleCloseDisable}>
           Cancelar
         </Button>
-        {!isLoading ? (
+        <LoadingButton isLoading={isLoading || isWriteLoading} variant="danger">
           <Button
             variant="danger"
             onClick={() => {
@@ -392,12 +422,7 @@ function DisableLotModal({ showDisableModal, handleCloseDisable, company, lot })
           >
             Desativar
           </Button>
-        ) : (
-          <Button variant="primary" disabled>
-            <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
-            <span className="ms-2">Carregando...</span>
-          </Button>
-        )}
+        </LoadingButton>
       </Modal.Footer>
     </Modal>
   );
@@ -420,7 +445,7 @@ function ConfirmLotModal({ show, close, company, lot }) {
   });
   const _ = useDebounce(null, 1000);
 
-  const { data, write } = useContractWrite(config);
+  const { data, write, isLoading: isWriteLoading } = useContractWrite(config);
 
   const { isLoading, isSuccess, error2 } = useWaitForTransaction({
     hash: data?.hash,
@@ -468,7 +493,7 @@ function ConfirmLotModal({ show, close, company, lot }) {
         <Button variant="secondary" onClick={close}>
           Cancelar
         </Button>
-        {!isLoading ? (
+        {/* {!isLoading ? (
           <Button
             variant="danger"
             onClick={() => {
@@ -482,7 +507,17 @@ function ConfirmLotModal({ show, close, company, lot }) {
             <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
             <span className="ms-2">Carregando...</span>
           </Button>
-        )}
+        )} */}
+        <LoadingButton isLoading={isLoading || isWriteLoading} variant="danger">
+          <Button
+            variant="danger"
+            onClick={() => {
+              write();
+            }}
+          >
+            Confirmar
+          </Button>
+        </LoadingButton>
       </Modal.Footer>
     </Modal>
   );
@@ -531,8 +566,9 @@ function LotEditModalForm({ company, show, handleClose, defaultLot }) {
   const { isLoading } = useWaitForTransaction({
     hash: data?.hash,
     onSuccess: () => {
-      handleClose();
-      window.location.reload();
+      setTimeout(() => {
+        handleClose();
+      }, 5000);
     },
   });
 

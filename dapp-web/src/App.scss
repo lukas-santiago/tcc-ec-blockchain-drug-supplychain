@@ -39,3 +39,18 @@ body {
     background-clip: content-box;
     background-color: #616161;
 }
+
+.text-bg-gray {
+    background-color: rgba(39, 39, 39, 0.397);
+    padding: 0.5em 0.25em;
+    border-end-end-radius: 0.25em;
+    border-start-end-radius: 0.25em;
+}
+
+.home-p {
+    text-indent: 2em;
+}
+
+.text-wrap {
+    text-wrap: nowrap !important;
+}
