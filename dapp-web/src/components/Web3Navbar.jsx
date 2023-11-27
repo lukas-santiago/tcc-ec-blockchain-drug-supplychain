@@ -12,7 +12,7 @@ import { LoadingButton } from "./LoadingButton";
 export function Web3Navbar() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary" style={{ height: "6em" }}>
-      <Container className="gap-3">
+      <Container className="gap-3 bg-light pb-3 rounded">
         <Navbar.Brand as={Link} to="/">
           Drug Supplychain dApp
         </Navbar.Brand>

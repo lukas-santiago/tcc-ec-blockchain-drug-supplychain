@@ -12,6 +12,8 @@ import { LotManagement } from "./pages/platform/operator/LotManagement";
 import { MovementManagement } from "./pages/platform/operator/MovementManagement";
 import { PlatformHome } from "./pages/platform/PlatformHome";
 import { NoMatch } from "./pages/NoMatch";
+import { SearchPage } from "./pages/home/SearchPage";
+import { HomeLayoutPage } from "./pages/home/HomeLayoutPage";
 
 function App() {
   return (
@@ -26,9 +28,9 @@ function App() {
 function RouteConfig() {
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />}>
+      <Route path="/" element={<HomeLayoutPage />}>
         <Route index element={<LandingPage />} />
-        <Route path="search" element={<NoMatch />} />
+        <Route path="search/:lotCode" element={<SearchPage />} />
         <Route path="*" element={<NoMatch />} />
       </Route>
       <Route path="platform" element={<PlatformLayout />}>

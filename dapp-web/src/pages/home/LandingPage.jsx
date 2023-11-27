@@ -1,18 +1,18 @@
-import { Button, Col, Container, Nav, Navbar, Row } from "react-bootstrap";
+import { useState } from "react";
+import { Button, Col, Container, Form, InputGroup, Nav, Navbar, Row } from "react-bootstrap";
 import { BiLinkExternal } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function LandingPage() {
   return (
     <>
-      <LandingPageNavbar />
       <LandingPageHero />
       <LandingPage1 />
     </>
   );
 }
 
-function LandingPageNavbar() {
+export function LandingPageNavbar() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary" style={{ height: "6em" }}>
       <Container className="gap-3 bg-light pb-3 rounded">
@@ -36,6 +36,23 @@ function LandingPageNavbar() {
   );
 }
 function LandingPageHero() {
+  const [letCode, setLetCode] = useState("");
+  const navigate = useNavigate();
+  const handleLotCode = (e) => {
+    setLetCode(e.target.value);
+  };
+
+  const searchLotCode = () => {
+    try {
+      const _lotCode = JSON.parse(atob(atob(letCode)));
+      console.log({ _lotCode });
+      navigate(`/search/${letCode}`);
+    } catch (error) {
+      console.log({ searchLotCodeError: error });
+      setLetCode("");
+    }
+  };
+
   return (
     <>
       <div
@@ -54,10 +71,18 @@ function LandingPageHero() {
               <h4 className="text-bg-gray">
                 Inovação Segura para Produtos de Valor: Rastreabilidade Precisa e Transparente
               </h4>
-              {/* <InputGroup className="w-100" >
-              <Form.Control type="text" placeholder="Pesquise pelo código" className="mt-3" />
-              <Button variant="outline-light" className="mt-3">Pesquisar</Button>
-            </InputGroup> */}
+              <InputGroup className="w-100">
+                <Form.Control
+                  type="text"
+                  placeholder="Pesquise pelo código"
+                  className="mt-3 input-dark"
+                  value={letCode}
+                  onChange={handleLotCode}
+                />
+                <Button variant="dark" className="mt-3" onClick={searchLotCode}>
+                  Pesquisar
+                </Button>
+              </InputGroup>
             </Col>
           </Row>
         </Container>

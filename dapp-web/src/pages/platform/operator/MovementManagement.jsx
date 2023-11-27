@@ -289,7 +289,7 @@ function useCompaniesFetcher() {
 //   };
 // }
 
-function MovementManagementTable({ lot }) {
+export function MovementManagementTable({ lot }) {
   const { data: lotActivities, refetch } = useContractRead({
     address: contractInfoPart2.address,
     abi: contractInfoPart2.abi,
