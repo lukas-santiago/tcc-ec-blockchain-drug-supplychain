@@ -21,8 +21,8 @@ const { chains, publicClient } = configureChains(
 const metadata = {
   name: "Supplychain DApp",
   description: "Supplychain DApp",
-  url: "https://lukas-santiago.github.io/tcc-ec-blockchain-drug-supplychain/platform", // your app's url
-  icons: ["https://lukas-santiago.github.io/tcc-ec-blockchain-drug-supplychain/vite.svg"], // your app's icon, no bigger than 1024x1024px (max. 1MB)
+  url: "/platform", // your app's url
+  icons: ["/vite.svg"], // your app's icon, no bigger than 1024x1024px (max. 1MB)
 };
 
 const connectors = [

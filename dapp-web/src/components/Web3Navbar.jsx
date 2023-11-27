@@ -72,7 +72,7 @@ function ChangeAccount() {
       .then((a) => {
         console.log({ a });
         setIsLoading(false);
-        window.location.pathname = "/tcc-ec-blockchain-drug-supplychain/platform";
+        window.location.pathname = "/platform";
       })
       .catch((e) => {
         console.log({ e });

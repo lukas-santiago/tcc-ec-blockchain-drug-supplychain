@@ -58,7 +58,7 @@ function LandingPageHero() {
       <div
         className="p-5 text-center bg-image rounded-3"
         style={{
-          backgroundImage: "url('/tcc-ec-blockchain-drug-supplychain/background_home.jpg')",
+          backgroundImage: "url('/background_home.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           height: "600px",
