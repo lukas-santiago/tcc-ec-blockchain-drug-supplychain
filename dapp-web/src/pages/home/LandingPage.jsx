@@ -15,7 +15,7 @@ export function LandingPage() {
 export function LandingPageNavbar() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary" style={{ height: "6em" }}>
-      <Container className="gap-3 bg-light pb-3 rounded">
+      <Container className="gap-3 pb-3 rounded">
         <Navbar.Brand as={Link} to="/">
           Drug Supplychain dApp
         </Navbar.Brand>
