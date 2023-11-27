@@ -4,7 +4,6 @@ import { Button, Form } from "react-bootstrap";
 import { stringToHex } from "viem";
 import { useAccount, useContractEvent, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from "wagmi";
 import contractInfo from "../../../../contract-abis/contract-info.json";
-import { LoadingButton } from "../../../components/LoadingButton";
 
 export function GrantSpecialRoles() {
   const { address } = useAccount();
@@ -16,7 +15,6 @@ export function GrantSpecialRoles() {
   const {
     config,
     error,
-    isLoading: isPrepareLoading,
   } = usePrepareContractWrite({
     address: contractInfo.address,
     abi: contractInfo.abi,
@@ -62,7 +60,7 @@ export function GrantSpecialRoles() {
         <p>Escolha o cargo que deseja atribuir abaixo:</p>
 
         <Button variant="danger" disabled={!write || isLoading || isSuccess} onClick={() => write?.()}>
-          {isLoading ? "Carregando..." : "COMPANY_ROLE"}
+          {isLoading || isWriteLoading ? "Carregando..." : "COMPANY_ROLE"}
         </Button>
         {/* <LoadingButton
           isLoading={isLoading || isWriteLoading || isPrepareLoading}
