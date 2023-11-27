@@ -185,7 +185,7 @@ export function MovementManagement() {
                       {foundedLotProducts.map((lotProduct, i) => (
                         <ListGroup key={i}>
                           <ListGroupItem className="d-flex justify-content-between align-items-center">
-                            <span>{foundedLotProductsCatalog[i]?.productName}</span>
+                            <span>{foundedLotProductsCatalog && foundedLotProductsCatalog[i]?.productName}</span>
                             <span>x{lotProduct.quantity}</span>
                           </ListGroupItem>
                         </ListGroup>
