@@ -75,7 +75,7 @@ function Inside() {
     console.log({ foundedLot, lotCode, foundedCompany, foundedLotProducts, foundedLotProductsCatalog, foundedLotRaw });
   return (
     <Container>
-      <h1 className="mb-4">Busca para o Lote: {_lotCode}</h1>
+      <h1 className="mb-4 mt-4">Busca para o Lote: {_lotCode}</h1>
       <hr />
       <Row className="mb-3">
         {foundedLot && (

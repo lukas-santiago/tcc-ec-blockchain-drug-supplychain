@@ -12,7 +12,7 @@ export function PlatformLayout() {
     <>
       <Web3Config>
         <Web3Navbar />
-        <Container>
+        <Container className="mt-4">
           <Row style={{ minHeight: "80vh" }}>
             <Col
               md={3}
